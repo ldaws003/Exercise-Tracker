@@ -1,0 +1,40 @@
+{
+	"author": "Leon Dawson",
+	"description": "A website for tracking exercise",
+	"name": "Exercise Tracker",
+	"version": "0.0.0",
+	"license": "MIT",
+	"main": "server.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ldaws003/Exercise-Tracker"
+	}
+	"dependencies": {
+			"express": "^4.16.4",
+			"body-parser": "^1.18.3",
+			"mongodb": "^3.1.0",
+			"pug": "^2.0.3",
+			"passport": "^0.4.0",
+			"express-session": "^1.15.6",
+			"passport-local": "^1.0.0",
+			"bcrypt": "^3.0.4",
+			"socket.io": "^2.2.0",
+			"passport.socketio": "^3.7.0",
+			"cookie-parser": "^1.4.4",
+			"react": "^16.8.1",
+			"react-dom": "^16.8.1",
+			"angular": "^1.7.7",
+			"react-redux": "6.0.0",
+			"redux": "4.0.1"
+	},
+	"engines": {
+		"node": ""
+	},
+	"keywords": {
+		"express",
+		"node",
+		"pug"
+	}
+	
+
+}
