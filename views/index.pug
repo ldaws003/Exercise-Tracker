@@ -12,4 +12,38 @@ html
 	body
 		header
 			title Exercise Tracker
+			
+	include includes/navbar.pug
+	
+	if user.loggedIn
+		h1 Welcome #{Name}
+	else
+		h1 Welcome
+	
+	p.
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lobortis eros ac turpis dignissim,
+		molestie placerat magna lobortis. Aliquam nec rhoncus ante. Class aptent taciti sociosqu ad litora 
+		torquent per conubia nostra, per inceptos himenaeos. Ut dapibus metus non tincidunt lobortis.
+		Aliquam fringilla enim vestibulum nulla molestie euismod.
+	
+	p.
+		For returning users please login
 		
+	p Login
+	form(action='/login', method='post')
+		input(type='text' name='user_name' placeholder='username')
+		input(type="password" name="login_password" placeholder='password')
+		input(type="submit" name="Submit" value="log in")
+		
+	p.
+		Aliquam tempus accumsan feugiat. Ut a sagittis tellus. Maecenas ac urna sit amet dolor ultrices 
+		ornare. Fusce eu tincidunt est. Nulla lobortis blandit rutrum. Donec rhoncus sodales mi. Duis nec 
+		mauris magna. Vivamus a tellus quam. Orci varius natoque penatibus et magnis dis parturient montes, 
+		nascetur ridiculus mus.
+		
+	p Sign Up
+	form(action='/register', method='post')
+		input(type='text' name='username')
+		input(type='password' name='password')
+		input(type='password' name='retyped_password')
+		input(type='submit' name='Submit' value='registered')
