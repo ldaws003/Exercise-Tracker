@@ -31,8 +31,8 @@ html
 		
 	p Login
 	form(action='/login', method='post')
-		input(type='text' name='user_name' placeholder='username')
-		input(type="password" name="login_password" placeholder='password')
+		input(type='text', name='user_name', placeholder='username', required)
+		input(type="password", name="login_password", placeholder='password', required)
 		input(type="submit" name="Submit" value="log in")
 		
 	p.
@@ -43,7 +43,7 @@ html
 		
 	p Sign Up
 	form(action='/register', method='post')
-		input(type='text' name='username')
-		input(type='password' name='password')
-		input(type='password' name='retyped_password')
+		input(type='text', name='username', required)
+		input(type='password', name='password', required)
+		input(type='password', name='retyped_password', required)
 		input(type='submit' name='Submit' value='registered')

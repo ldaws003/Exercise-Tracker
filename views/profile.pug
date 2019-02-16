@@ -1,0 +1,19 @@
+doctype html
+
+html
+	head
+		title Welcome #(username)
+		meta(charset='utf-8')
+		meta(name='description' content='exercise tracker profile')
+		meta(http-equiv='X-UA-Compatible', content='IE-edge')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		
+	body
+		header
+			title Hi, #(username)!
+			
+		include includes/navbar.pug
+		
+		h2 New Entry
+		form(action='/addEntry', method='post')
+			input='text'
