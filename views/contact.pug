@@ -1,0 +1,33 @@
+doctype html
+
+html
+	head
+		title Exercise Tracker
+		meta(charset='utf-8')
+		meta(name='description' content='contact page exercise tracker')
+		meta(http-equiv='X-UA-Compatible', content='IE-edge')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		
+	body
+		header
+			title Contact
+			
+		include includes/navbar.pug
+		
+		
+		p.
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vestibulum quis nulla 
+			vitae dictum. Ut malesuada venenatis bibendum. Sed suscipit lacus sit amet facilisis volutpat.
+			Pellentesque eros lacus, pulvinar at orci nec, varius viverra odio. Donec ullamcorper porttitor 
+			arcu, non sollicitudin eros. Duis eget porttitor arcu. Sed vel arcu hendrerit, dignissim massa 
+			sed, mattis dui.
+			
+			
+	    p Contact Form
+		form(action='/contact', method='post')
+			input(type='text' name='name' required='')
+			input(type='email' name='email' required='')
+			input(type='text' name='message' required='')
+			input(type='submit' name='submit')
+		
+		
