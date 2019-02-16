@@ -2,18 +2,29 @@ doctype html
 
 html
 	head
-		title Welcome #(username)
+		title Welcome #{username}
 		meta(charset='utf-8')
 		meta(name='description' content='exercise tracker profile')
 		meta(http-equiv='X-UA-Compatible', content='IE-edge')
 		meta(name='viewport', content='width=device-width, initial-scale=1')
+		link(src='https://code.jquery.com/jquery-1.12.4.js')
+		link(src='https://code.jquery.com/ui/1.12.1/jquery-ui.js')
 		
 	body
 		header
-			title Hi, #(username)!
+			title Hi, #{username}!
 			
 		include includes/navbar.pug
 		
 		h2 New Entry
-		form(action='/addEntry', method='post')
-			input='text'
+		form(action='/add_entry', method='post')
+		    input(type='hidden', name=#{username}, required)
+			input(type='text', name='description', required)
+			input(type='text', name='duration', required)
+			input(type='text', id='datepicker', required)
+			input(type='submit', name='submit', value='added_entry')
+			
+				
+	script
+	
+	-$(document).ready(function() {$( "#datepicker" ).datepicker();} );
