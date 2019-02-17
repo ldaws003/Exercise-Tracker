@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongodb = require('mongodb');
+const mongoose = require('mongoose');
 const ObjectID = require('mongodb').ObjectID;
 const passport = require('passport');
 const passportLocal = require('passport-local');
