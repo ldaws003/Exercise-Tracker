@@ -1,9 +1,9 @@
 'use strict'
 
-mongoose = require('mongoose');
-mongodb = require('mongodb');
-
-Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
+const saltRounds = 12;
 
 userSchema = new Schema({
 	username: {
@@ -41,6 +41,18 @@ userSchema = new Schema({
 			required: true
 		}
 	}]
+});
+
+userSchema.pre('save', function(next){
+	var user = this;
+	bcrypt.hash(user.password, saltRounds, function(err, hash){
+		if(err){
+			return next(err);
+		}
+		
+		user.password = hash;
+		next();
+	})
 });
 
 let User = mongoose.model('User', userSchema);
