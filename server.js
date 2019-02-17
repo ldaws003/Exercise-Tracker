@@ -1,15 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongodb = require('mongodb');
-const ObjectId = require('mongodb').ObjectId;
+const ObjectID = require('mongodb').ObjectID;
 const passport = require('passport');
 const passportLocal = require('passport-local');
 const bcrypt = require('bcrypt');
-const socketio = require('socket.io');
+const io = require('socket.io');
 const passportio = require('passport.socketio');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
+const session = require('express-session');
+const sessionStore = new session.MemoryStore();
 const app = express();
+const http = require('http').Server(app);
 
 app.set('view engine', 'pug');
 app.use('/public', express.static(process.cwd() + '/public'));
@@ -20,7 +23,4 @@ app.use(helmet({
 	hidePoweredBy: { setTo: 'PHP 4.2.0'}
 }));
 
-app.route('/')
-   .get(function(req, res){
-	   res.render();	   
-   });
+
