@@ -14,6 +14,8 @@ const sessionStore = new session.MemoryStore();
 const app = express();
 const http = require('http').Server(app);
 
+require('dotenv').config();
+
 app.set('view engine', 'pug');
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use(bodyParser.json());
