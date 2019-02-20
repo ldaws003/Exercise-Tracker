@@ -5,6 +5,13 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
 
+function questionValidator(val){
+	if(val.length === 2){
+		return val[0].question !== val[1].question; 
+	}
+	return false;
+}
+
 userSchema = new Schema({
 	username: {
 		type: String,
@@ -16,17 +23,20 @@ userSchema = new Schema({
 		type: String,
 		required: true
 	},
-	security_questions: [{
-		question: {
-			type: String,
-			required: true
-		},
-		answer: {
-			type: String,
-			required: true,
-			trim: true
-		}
-	}],
+	security_questions: {
+		type: [{
+			question: {
+				type: String,
+				required: true
+			},
+			answer: {
+				type: String,
+				required: true,
+				trim: true
+			}
+		}],
+		validate: [questionValidator, '{PATH} does not equal the length of 2 or questions are the same']
+	},
 	exercise_data: [{
 		description: {
 			type: String,
@@ -45,6 +55,10 @@ userSchema = new Schema({
 
 userSchema.pre('save', function(next){
 	var user = this;
+	//maybe include different way of 
+	if(user.security_questions.length < 2 && user.security_questions[0].question == user.security_questions[1].question){
+		var err = new Error('')
+	}
 	bcrypt.hash(user.password, saltRounds, function(err, hash){
 		if(err){
 			return next(err);
