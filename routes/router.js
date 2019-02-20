@@ -76,7 +76,7 @@ function requiresLogin(req, res, next){
 }
 
 router.get('/profile', mid.requiresLogin, function(req,res,next){
-	//	
+	//render the profile page	
 });
 
 module.exports = router;
