@@ -84,7 +84,7 @@ mongo.connect(process.env.DB, (err, db) => {
 		   var newUser = User(userData);
 		   newUser.save((err) => {
 			   if(err) console.log(err);
-		   })
+		   });
 	   });
 	
 	app.route('/')
