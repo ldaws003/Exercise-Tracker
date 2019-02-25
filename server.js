@@ -43,6 +43,12 @@ app.use(session({
 
 app.use('/', router);
 
+function ensureAuthenticated(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	}
+	res.redirect('/');
+};
 
 mongo.connect(process.env.DB, (err, db) => {
 	if(err) console.log(err);
@@ -77,6 +83,11 @@ mongo.connect(process.env.DB, (err, db) => {
 			res.render(process.cwd() + '/profile');
 		});
 	});
+	
+	app.route('/profile')
+	   .get(ensureAuthenticated, (req, res) => {
+		   res.render(process.cwd() + '/views/profile.pug');
+	   });
 	
 	app.listen(process.env.PORT || 3000, () => {
 		console.log("Listening on port " + process.env.PORT);
