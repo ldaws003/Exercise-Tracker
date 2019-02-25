@@ -71,11 +71,26 @@ mongo.connect(process.env.DB, (err, db) => {
 		}
 	));
 	
-	app.post('/login', passport.authenticate('local', { failureRedirect: '/' }), function(req,res){
-		res.redirect('/profile').get(function(req,res){
-			res.render(process.cwd() + '/profile');
-		});
-	});
+	app.route('/')
+	   .get((req, res) => {
+		   res.render(process.cwd() + '/views/pug/index.pug', {title: 'Home Page', message: 'Please login', showLogin: true});
+	   });
+	
+    app.route('/login')
+      .post(passport.authenticate('local', { failureRedirect: '/' }), (req,res) => {
+        res.redirect('/profile');
+      });  
+	
+	app.route('/logout')
+	   .get((req, res) => {
+		   req.logout();
+		   res.redirect('/');
+	   });
+	   
+    app.route('/profile')
+	   .get(ensureAuthenticated, (req, res) => {
+		   res.render(process.cwd() + '/views/profile.pug', {username: req.user.username});
+	   });
 	
 	function ensureAuthenticated(req, res, next){
 		if(req.isAuthenticated()){
@@ -84,10 +99,9 @@ mongo.connect(process.env.DB, (err, db) => {
 		res.redirect('/');
 	};
 	
-	app.route('/profile')
-	   .get(ensureAuthenticated, (req, res) => {
-		   res.render(process.cwd() + '/views/profile.pug', {username: req.user.username});
-	   });
+	app.use((req, res, next) => {
+		res.status(404).type('text').send('Not Found');
+	});
 	
 	app.listen(process.env.PORT || 3000, () => {
 		console.log("Listening on port " + process.env.PORT);
