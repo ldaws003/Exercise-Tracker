@@ -72,6 +72,12 @@ mongo.connect(process.env.DB, (err, db) => {
 		}
 	));
 	
+	app.post('/login', passport.authenticate('local', { failureRedirect: '/' }), function(req,res){
+		res.redirect('/profile').get(function(req,res){
+			res.render(process.cwd() + '/profile');
+		});
+	});
+	
 	app.listen(process.env.PORT || 3000, () => {
 		console.log("Listening on port " + process.env.PORT);
 	});
