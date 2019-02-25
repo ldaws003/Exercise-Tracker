@@ -17,6 +17,7 @@ const sessionStore = new session.MemoryStore();
 const app = express();
 const http = require('http').Server(app);
 const router = require('./routes');
+const User = require('./schema/user_schema');
 
 require('dotenv').config();
 
@@ -71,9 +72,24 @@ mongo.connect(process.env.DB, (err, db) => {
 		}
 	));
 	
+	app.route('/register')
+	   .post((req, res, next) => {
+		   var userData = {
+			   username: req.body.username,
+			   password: req.body.password
+			   security_questions: req.body.security_questions,
+			   exercise_data: []
+		   };
+		   
+		   var newUser = User(userData);
+		   newUser.save((err) => {
+			   if(err) console.log(err);
+		   })
+	   });
+	
 	app.route('/')
 	   .get((req, res) => {
-		   res.render(process.cwd() + '/views/pug/index.pug', {title: 'Home Page', message: 'Please login', showLogin: true});
+		   res.render(process.cwd() + '/views/index.pug');
 	   });
 	
     app.route('/login')
