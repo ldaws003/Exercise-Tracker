@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const ObjectID = require('mongodb').ObjectID;
 const mongo = require('mongodb').MongoClient;
+const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
