@@ -49,4 +49,14 @@ router.post('/', function(req,res,next)){
 	
 });
 
+router.get('/:profile/journal', function(req, res, next){
+	
+	User.findById(new OjectId(req.user._id)}, (err, user) => {
+		if(err) throw err;
+		
+		res.render(process.cwd() + '/views/journal.pug', {username: user.username, exercise_data: user.exercise_data});
+	})
+	
+});
+
 module.exports = router;
