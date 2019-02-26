@@ -3,10 +3,19 @@ const passport = require('passport');
 module.exports = function(app, db){
 	app.route('/register')
 	   .post((req, res, next) => {
+		   var security_qestions = [
+		   {
+			   question: req.body.security_question1,
+			   answer: req.body.security_answer1
+		   },
+		   {
+			   question: req.body.security_question2,
+			   answer: req.body.security_answer2
+		   }];
 		   var userData = {
 			   username: req.body.username,
 			   password: req.body.password
-			   security_questions: req.body.security_questions,
+			   security_questions: security_questions,
 			   exercise_data: []
 		   };
 		   
