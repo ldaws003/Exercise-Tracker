@@ -19,6 +19,7 @@ const app = express();
 const http = require('http').Server(app);
 const router = require('./routes');
 const User = require('./schema/user_schema');
+const user_authentication = require('./auth/user_authentication.js');
 
 require('dotenv').config();
 
@@ -50,6 +51,8 @@ app.use('/', router);
 
 mongo.connect(process.env.DB, (err, db) => {
 	if(err) console.log(err);
+	
+	user_authentication(auth, db);
 	
 	app.route('/register')
 	   .post((req, res, next) => {
