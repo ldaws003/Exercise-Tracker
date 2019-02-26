@@ -89,7 +89,11 @@ mongo.connect(process.env.DB, (err, db) => {
 		   newUser.save((err) => {
 			   if(err) console.log(err);
 		   });
-	   });
+	   }, 
+	   passport.authenticate('local', { failureRedirect: '/' }),
+	     (req, res, next) => {
+			 res.redirect('profile');
+		 });
 	
 	app.route('/')
 	   .get((req, res) => {
