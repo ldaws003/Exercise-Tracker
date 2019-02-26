@@ -26,13 +26,6 @@ app.set('view engine', 'pug');
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use(helmet({
-	frameguard: { action: 'deny' },
-	hidePoweredBy: { setTo: 'PHP 4.2.0'}
-}));
 
 app.use(session({
 	secret: process.env.SESSION_SECRET,
@@ -42,6 +35,16 @@ app.use(session({
 		url: process.env.DB
 	})
 }));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(helmet({
+	frameguard: { action: 'deny' },
+	hidePoweredBy: { setTo: 'PHP 4.2.0'}
+}));
+
 
 app.use('/', router);
 
