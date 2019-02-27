@@ -14,7 +14,7 @@ module.exports = function(app){
 				return;
 			}
 			
-			User.findById(new ObjectId(req.user.id), {security_questions: 1}, {runValidators: true, lean: true},(err, doc) => {
+			User.findById(new ObjectID(req.user.id), {security_questions: 1}, {runValidators: true, lean: true},(err, doc) => {
 				if(err) res.status(500).send({message: 'There was an error, please try again.'}); return;
 				res.json(doc);
 			});
@@ -39,7 +39,7 @@ module.exports = function(app){
 				return;
 			}
 			
-			User.findOneAndUpdate({_id: new ObjectId(req.user.id)}, {$push {exercise_data: data}}, {runValidators: true, new: true},(err, doc) => {
+			User.findOneAndUpdate({_id: new ObjectID(req.user.id)}, {$push {exercise_data: data}}, {runValidators: true, new: true},(err, doc) => {
 				if(err) res.status(500).send({message: "There was an error and your entry wasn't added, please try again."});
 				
 				res.json({message: 'entry added'});				
@@ -71,8 +71,8 @@ module.exports = function(app){
 								}
 							};
 			
-			User.findOneAndUpdate({_id: ObjectId(req.user.id)}, setObject, {runValidators: true, new: true}, (err, doc) => {
-				if(err) res.status(500).send({message: "There was an error and your entry wasn't deleted, please try again."});
+			User.findOneAndUpdate({_id: ObjectID(req.user.id)}, setObject, {runValidators: true, new: true}, (err, doc) => {
+				if(err) res.status(500).send({message: "There was an error and your entry wasn't deleted, please try again."}); return;
 				
 				res.json({message: 'entry deleted'});	
 			});
