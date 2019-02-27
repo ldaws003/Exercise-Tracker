@@ -22,6 +22,7 @@ const User = require('./schema/user_schema');
 const user_authentication = require('./auth/user_authentication.js');
 const base_routes = require('./routes/base_routes.js');
 const getExercise = require('./api/get_exercise_data.js');
+const deleteUser = require('./api/delete_user.js');
 
 require('dotenv').config();
 
@@ -64,7 +65,7 @@ mongo.connect(process.env.DB, (err, db) => {
 	user_authentication(app, db);
 	base_routes(app, db);
 	getExercise(app);
-	
+	deleteUser(app);
 	
 	
 	app.use((req, res, next) => {
