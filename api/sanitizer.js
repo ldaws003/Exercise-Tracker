@@ -1,17 +1,22 @@
 'use strict'
 
 
-//this would sanitize entries and send an error for usernames and passwords when using illegal characters
+//this would sanitize entries
 function Sanitizer(){
 	
+	//santizing usernames
+	this.username = function(data){
+		data.username = data.username.trim();		
+	}
+	
 	//sanitizing passwords
-	this.password = function(){
-		
+	this.password = function(data){
+		data.password = data.password.trim();		
 	};
 	
-	//sanitizing usernames	
-	this.entry = function(){
-		
+	//sanitizing exercise data entries	
+	this.entry = function(data){
+		data.description = data.description.trim().toLowerCase();		
 	};
 }
 
