@@ -21,6 +21,7 @@ const router = require('./routes');
 const User = require('./schema/user_schema');
 const user_authentication = require('./auth/user_authentication.js');
 const base_routes = require('./routes/base_routes.js');
+const getExercise = require('./api/get_exercise_data.js');
 
 require('dotenv').config();
 
@@ -28,6 +29,13 @@ app.set('view engine', 'pug');
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+var mongOptions = {
+	reconnectTries: 7,
+	reconnectInterval: 1500
+};
+
+mongoose.connect(process.env.DB, mongOptions);
 
 app.use(session({
 	secret: process.env.SESSION_SECRET,
@@ -55,6 +63,7 @@ mongo.connect(process.env.DB, (err, db) => {
 	
 	user_authentication(app, db);
 	base_routes(app, db);
+	getExercise(app);
 	
 	
 	
