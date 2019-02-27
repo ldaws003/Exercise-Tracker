@@ -4,19 +4,18 @@
 //all functions  would return a boolean (true if yes, false if no);
 
 
-const SECURITY_QUESTIONS = [
-	"What is your mother's maiden name?",
-	"What was the name of your elementary school?",
-	"What was the name of your first pet?",
-	"What is your favorite book?",
-	"What was the first company that you worked for?",
-	"Where did you go to high school/college?",
-	"What is your favorite food?",
-	"What city were you born in?"
-];
-
-
 function Checke(){
+	
+	const SECURITY_QUESTIONS = [
+		"What is your mother's maiden name?",
+		"What was the name of your elementary school?",
+		"What was the name of your first pet?",
+		"What is your favorite book?",
+		"What was the first company that you worked for?",
+		"Where did you go to high school/college?",
+		"What is your favorite food?",
+		"What city were you born in?"
+	];
 	
 	const illegalChars = /[\W+]/;
 	
