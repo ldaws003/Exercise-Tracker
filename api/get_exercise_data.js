@@ -34,6 +34,8 @@ module.exports = function(app){
 			
 		    var data = req.body;
 			
+			data.duration = parseInt(data.duration);
+			
 			if(!data.description || !data.date || !data.duration){
 				res.status(400).send({message: 'All fields must be filled out.'});
 				return;
