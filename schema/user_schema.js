@@ -17,11 +17,13 @@ userSchema = new Schema({
 		type: String,
 		required: true,
 		trim: true,
-		unique: true
+		unique: true,
+		validate: {(val) => return (5 < val.length <= 16), 'Length of username must betweenn 5 and 16'}
 	},
 	password: {
 		type: String,
-		required: true
+		required: true,
+		validate: {(val) => return (8 < val.length <= 16), 'Length of password must betweenn 8 and 16'}
 	},
 	security_questions: {
 		type: [{
