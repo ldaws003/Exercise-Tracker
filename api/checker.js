@@ -4,7 +4,7 @@
 //all functions  would return a boolean (true if yes, false if no);
 
 
-function Checke(){
+function Checker(){
 	
 	const SECURITY_QUESTIONS = [
 		"What is your mother's maiden name?",
@@ -19,18 +19,24 @@ function Checke(){
 	
 	const illegalChars = /[\W+]/;
 	
-	this.isSecurityQuestionsOk = function(data){
-		if(data.security_questions.length !== 2){
+	this.isSecurityQuestionsOk = function(security_questions){
+		
+		if(security_questions.length !== 2){
 			return false;
 		}
 		
 		let count = 0;
 		
-		for(int i = 0; i < data.security_questions.length; i++){
+		for(let i = 0; i < security_questions.length; i++){
 			
-			if(SECURITY_QUESTIONS.indexOf(data.security_questions[i]) !== -1){
+			if(SECURITY_QUESTIONS.indexOf(security_questions[i].questions) !== -1){
 				count++;
 			}
+			
+			if( !(50 >= security_questions[i].answer.length > 0)){
+				return false;
+			}
+			
 		}
 		
 		if(count !== 2){
@@ -40,49 +46,63 @@ function Checke(){
 		return true;
 	}
 	
-	this.isPasswordOk = function(data){
+	this.isPasswordOk = function(password){
 		
 		//checking to see if it is a string
-		if(typeof data.password !== 'string'){
+		if(typeof password !== 'string'){
 			return false;
 		}
 		
 		//checking for illegal characters
-		if(illegalChars.test(data.password)){
+		if(illegalChars.test(password)){
 			return false;
+		}
+		
+		
+		if(!(8 < password.length <= 16)){
+			return false;			
+		}
+		
+		
+		return true;
+		
+	};
+	
+	this.isUsernameOk = function(username){
+		
+		//checking to see if it is a string
+		if(typeof username !== 'string'){
+			return false;
+		}
+		
+		//checking for illegal characters
+		if(illegalChars.test(username)){
+			return false;
+		}
+		
+		if(!(5 < username.length <= 16)){
+			return false;			
 		}
 		
 		return true;
 		
 	};
 	
-	this.isUsernameOk = function(data){
+	this.isEntryOk = function(entryExercise){
 		
-		//checking to see if it is a string
-		if(typeof data.username !== 'string'){
+		if(typeof entryExercise.description !== 'string'){
 			return false;
 		}
 		
-		//checking for illegal characters
-		if(illegalChars.test(data.username)){
+		if(!(0 < entryExercise.description.length <= 600)){
 			return false;
 		}
 		
-		return true;
-		
-	};
-	
-	this.isEntryOk = function(data){
-		
-		if(typeof data.description !== 'string'){
+		if(!(entryExercise.date instanceof Date)){
 			return false;
 		}
 		
-		if(!(data.date instanceof Date)){
-			return false;
-		}
-		
-		if(typeof data.duration !== 'number' && data.duration > 0){
+		if(typeof entryExercise.duration !== 'number' && entryExercise.duration > 0){
 			return false;	
 		}
 		
@@ -90,3 +110,5 @@ function Checke(){
 		
 	};
 }
+
+module.exports = Checker;
