@@ -5,17 +5,17 @@
 function Sanitizer(){
 	
 	//santizing usernames
-	this.username = function(data){
+	this.sanitizeUsername = function(data){
 		data.username = data.username.trim();		
 	}
 	
 	//sanitizing passwords
-	this.password = function(data){
+	this.sanitizePassword = function(data){
 		data.password = data.password.trim();		
 	};
 	
 	//sanitizing exercise data entries	
-	this.entry = function(data){
+	this.sanitizeEntry = function(data){
 		data.description = data.description.trim().toLowerCase();		
 	};
 }
