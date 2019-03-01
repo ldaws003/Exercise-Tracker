@@ -27,10 +27,15 @@ router.post('/', function(req,res,next)){
 		req.body.security_questions &&
 		req.body.verify_password){
 			
+			var security_questions = [
+				{question: req.body.security_question1, answer: req.body.security_answer1},
+				{question: req.body.security_question2, answer: req.body.security_answer2}
+			];
+			
 			var userData = {
 				username: req.body.username,
 				password: req.body.password,
-				security_questions: req.body.security_questions
+				security_questions: security_questions
 			}
 			
 			User.create(userData, function(err, user){
