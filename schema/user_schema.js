@@ -3,7 +3,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
+const Sanitizer = require('../api/sanitizer.js');
+const Checker = require('../api/checker.js');
 const saltRounds = 12;
+
+var sanitizer = Sanitizer();
+var checker = Checker();
+
 
 function questionValidator(val){
 	if(val.length === 2){
@@ -18,12 +24,12 @@ userSchema = new Schema({
 		required: true,
 		trim: true,
 		unique: true,
-		validate: {(val) => return (5 < val.length <= 16), 'Length of username must betweenn 5 and 16'}
+		validate: checker.isUsernameOk
 	},
 	password: {
 		type: String,
 		required: true,
-		validate: {(val) => return (8 < val.length <= 16), 'Length of password must betweenn 8 and 16'}
+		validate: checker.isPasswordOk
 	},
 	security_questions: {
 		type: [{
@@ -37,7 +43,7 @@ userSchema = new Schema({
 				trim: true
 			}
 		}],
-		validate: [questionValidator, '{PATH} does not equal the length of 2 or questions are the same']
+		validate: checker.isSecurityQuestionsOk
 	},
 	exercise_data: [{
 		description: {
@@ -52,15 +58,17 @@ userSchema = new Schema({
 			type: Number,
 			required: true
 		}
+		validate: checker.isEntryOk
 	}]
 });
 
 userSchema.pre('save', function(next){
 	var user = this;
-	//maybe include different way of 
-	if(user.security_questions.length < 2 && user.security_questions[0].question == user.security_questions[1].question){
-		var err = new Error('')
-	}
+	
+	sanitzer.sanitizeUsername(user);
+	sanitizer.sanitizePassword(user);
+	sanitizer.sanitizeEntry(user);
+	
 	bcrypt.hash(user.password, saltRounds, function(err, hash){
 		if(err){
 			return next(err);
