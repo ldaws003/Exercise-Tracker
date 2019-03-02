@@ -46,6 +46,10 @@ userSchema = new Schema({
 		validate: checker.isSecurityQuestionsOk
 	},
 	exercise_data: [{
+		category: {
+			type: String,
+			required: true
+		}
 		description: {
 			type: String,
 			required: true
