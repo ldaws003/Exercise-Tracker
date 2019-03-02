@@ -1,0 +1,7 @@
+form(action='/add_entry', method='post')
+		    input(type='hidden', name=#{username}, required)
+			input(type='text', name='description', required)
+			input(type='text', name='duration', required)
+			input(type='text', id='datepicker', required)
+			input(type='submit', name='submit', value='added_entry')
+	
