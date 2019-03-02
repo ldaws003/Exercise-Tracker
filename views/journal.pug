@@ -14,11 +14,14 @@ html
 		
 		include includes/navbar.pug
 		
+		
+		
 		p Showing at most 20 entries
 		
 		for n, i in exercise_data
 			div.entry
 				p=n.description
+				p=n.category
 				p=moment(n.date).format('MM/DD/YYYY')
 				if n.duration >= 3600
 					p=moment(n.duration).format('HH hours, mm minutes, ss seconds')
