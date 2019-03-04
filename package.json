@@ -30,10 +30,11 @@
 			"bootstrap": "^4.3.1",
 			"helmet": "^3.15.1",
 			"dotenv": "^6.2.0",
-            "connect-mongo": "^2.0.3"			
+            "connect-mongo": "^2.0.3",
+			"chart.js": "2.7.3"
 	},
 	"engines": {
-		"node": ""
+		"node": "4.4.3"
 	},
 	"keywords": {
 		"express",
