@@ -1,6 +1,7 @@
 'use strict'
 
 const ChartJs = require("chart.js");
+const moment = require('moment');
 
 function DataDisplay(){
 	
@@ -35,44 +36,51 @@ function DataDisplay(){
 		{
 			let sumDur, currentDate;
 			
-			currentDate = dataPoints[0].date;
-			
 			function isSameDate(a, b){
 				return (a.getFullYear() == b.getFullYear() &&
 					    a.getMonth() == b.getMonth() &&
 						a.getDate() == b.getDate());
 			}
 			
-			for(let i = 0; i < dataPoints.length; i++){
-				//check if currentDate equals the date of the current obj
-				if(isSameDate(currentDate, dataPoints[i].date)){
-					//if so add that to the array
-				} else {
-					//if not push to sumDur and a copy of currentDate to their respective arrays
-					//set sumDur to the duration of the current obj + and the currentDate to the date
+			
+			var i = 0;		
+			
+			while(true){	
+			
+				currentDate = dataPoints[i].date;
+				sumDur = 0;	
+				
+				while (isSameDate(currentDate, dataPoints[i].date)){
+					
+					sumDur += dataPoints[i].duration;		
+					i++;
+					
+					if(!dataPoints[i]){
+						break;
+					}
 				}
 				
+				dataObj.exerciseAmounts.push(sumDur);
+				dataObj.dateOfExercise.push(currentDate);
 				
-				
-
-				//once you are at the last entry push the sumDur and the new
+				if( i > dataPoints.length - 1 ){
+					break;
+				}
 				
 			}
 			
 		}
 		
 		
-		
-		//this would contain all of the labels by date
-		
+		//now i should convert the dataPoints.dateOfExercise into strings
 		
 		
 		var data = {
-			labels: ,
+			labels: dataPoints.dateOfExercise,
 			datasets: [
 				{
 					label: category[0].toUpperCase() + category.slice(1).toLowerCase(),
-					data: dataPoints
+					data: dataPoints.exerciseAmounts
 				}
 			]
 		};
