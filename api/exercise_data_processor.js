@@ -70,41 +70,29 @@ function DataDisplay(){
 			}
 			
 		}
+				
+		dataPoints.dateOfExercise = dataPoints.dateOfExercise.map( ele => moment(ele).format('MM/DD/YYYY'));
 		
+		var chartColors = {
+			"aerobic": {borderColors: "rgba(158, 158, 158, 1)", backgroundColor: "rgba(196, 196, 196, 0.91)"},
+			"strength":{borderColors: "rgba(245, 0, 45, 1)", backgroundColor: "rgba(255, 36, 76, 0.9)"},
+			"flexibility": {borderColors: "rgba(0, 16, 235, 1)", backgroundColor: "rgba(51, 65, 255, 0.85)"},
+			"balance": {borderColors: "rgba(51, 255, 248, 1)", backgroundColor: "hsla(178, 100%, 70%, 0.84)"}
+		};
 		
-		//now i should convert the dataPoints.dateOfExercise into strings
-		
+		var type = 'line';
 		
 		var data = {
 			labels: dataPoints.dateOfExercise,
 			datasets: [
 				{
 					label: category[0].toUpperCase() + category.slice(1).toLowerCase(),
-					data: dataPoints.exerciseAmounts
+					data: dataPoints.exerciseAmounts,
+					borderColors: chartColors[category].borderColors,
+					backgroundColor: chartColors[category].backgroundColor
 				}
 			]
-		};
-	
-		
-		var exerciseTypes = {
-			"aerobic",
-			"strength",
-			"flexibility",
-			"balance"
-		};
-		
-		var chartColors = {
-			"aerobic": {borderColors: "rgba(158, 158, 158, 1)", backgroundColor: "rgba(196, 196, 196, 0.91)"},
-			"strength":{borderColors: , backgroundColor: },
-			"flexibility": {borderColors: , backgroundColor: },
-			"balance": {borderColors: , backgroundColor: }
-		};
-		
-		var type = 'line';
-		
-		var data = {
-			
-		};
+		};		
 		
 		var options = {
 			showLines: true,
@@ -112,7 +100,7 @@ function DataDisplay(){
 		};
 		
 		
-		return {type, data, options};
+		return {type: type, data: data, options: options};
 		
 	}
 	
