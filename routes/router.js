@@ -2,16 +2,17 @@
 
 const mongodbo = require('mongodb');
 const mongoose = require('mongoose');
-const User = require('../user_schema');
+const User = require('../schema/user_schema.js');
 const express = require('exrpess');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const DataDisplay = require('../api/exercise_data_processor.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const connection = process.env.DB;
 
-//this route signs up a userAgent
+var dataDisplay = DataDisplay();
 
 router.post('/', function(req,res,next)){
 	
@@ -56,12 +57,40 @@ router.post('/', function(req,res,next)){
 
 router.get('/:profile/journal', function(req, res, next){
 	
-	User.findById(new OjectId(req.user._id)}, (err, user) => {
+	User.findById(new ObjectID(req.user._id), (err, user) => {
 		if(err) throw err;
 		
-		res.render(process.cwd() + '/views/journal.pug', {username: user.username, exercise_data: user.exercise_data});
+		var chartData = {
+			aerobic: dataDisplay.makeChart(user, 'aerobic'),
+			strength: dataDisplay.makeChart(user, 'strength'),
+			flexibility: dataDisplay.makeChart(user, 'flexibility'),
+			balance: dataDisplay.makeChart(user, 'balance')			
+		};
+		
+		user.exercise_data = dataDisplay.shown(user, 1, 20);
+		
+		res.render(process.cwd() + '/views/journal.pug', {
+			username: user.username,
+			exercise_data: user.exercise_data,
+			chartData: chartData
+		});
 	})
 	
+});
+
+router.get('/:profile/:pg', function(req, res, next){
+	
+	if(!(req.params.pg >= 1)){
+		res.status(404).type('text').send('Invalid page number');
+		return;
+	}
+	
+	User.findById(new ObjectID(req.user._id), (err, user) => {
+		if(err) throw err;
+		
+		user.exercise_data = dataDisplay(user, req.params.pg, 20);
+		res.json({exercise_data: user.exercise_data});
+	});
 });
 
 module.exports = router;
