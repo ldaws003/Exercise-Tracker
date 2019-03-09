@@ -13,9 +13,9 @@ html
 		header
 			title Exercise Tracker
 			
-	include includes/navbar.pug
+	include ../includes/navbar.pug
 	
-	if user.loggedIn
+	if user
 		h1 Welcome #{username}
 	else
 		h1 Welcome
