@@ -14,7 +14,7 @@ const connection = process.env.DB;
 
 var dataDisplay = DataDisplay();
 
-router.post('/', function(req,res,next)){
+router.post('/', function(req,res,next){
 	
 	//check if the password and confirmation password are the same
 	if(req.body.password !== req.body.verify_password){
