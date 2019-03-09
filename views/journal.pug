@@ -7,14 +7,14 @@ html
 		meta(name='description' content='journal page exercise tracker')
 		meta(http-equiv='X-UA-Compatible', content='IE-edge')
 		meta(name='viewport', content='width=device-width, initial-scale=1')
-		script(src="https://momentjs.com/downloads/moment-with-locales.js")
+		script(src="https://cdn.jsdelivr.net/npm/vue")
 		
 	body
 		header Exercise Journal
 		
 		include includes/navbar.pug
 		
-		
+		include includes/exercise_form.pug
 		
 		p Showing at most 20 entries
 		
@@ -28,6 +28,5 @@ html
 				else if n.duration >= 60
 					p=moment(n.duration).format('mm minutes, ss seconds')
 				else
-					p=moment(n.duration).format('ss seconds')	
-
-		div add pagination
+					p=moment(n.duration).format('ss seconds')
+					
