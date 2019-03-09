@@ -7,8 +7,8 @@ const Sanitizer = require('../api/sanitizer.js');
 const Checker = require('../api/checker.js');
 const saltRounds = 12;
 
-var sanitizer = Sanitizer();
-var checker = Checker();
+var sanitizer = new Sanitizer();
+var checker = new Checker();
 
 
 function questionValidator(val){
@@ -24,12 +24,18 @@ userSchema = new Schema({
 		required: true,
 		trim: true,
 		unique: true,
-		validate: checker.isUsernameOk
+		validate: {
+			validator: checker.isUsernameOk,
+			message: 'There was an error with your username'
+			}
 	},
 	password: {
 		type: String,
 		required: true,
-		validate: checker.isPasswordOk
+		validate: {
+			validator: checker.isPasswordOk,
+			message: 'There was an error with your password'
+			}
 	},
 	security_questions: {
 		type: [{
@@ -43,27 +49,35 @@ userSchema = new Schema({
 				trim: true
 			}
 		}],
-		validate: checker.isSecurityQuestionsOk
+		validate: {
+			validator: checker.isSecurityQuestionsOk,
+			message: 'There was an error processing your security questions'
+			}
 	},
-	exercise_data: [{
-		category: {
-			type: String,
-			required: true
+	exercise_data: {
+		type: [{
+			category: {
+				type: String,
+				required: true
+			}
+			description: {
+				type: String,
+				required: true
+			},
+			date: {
+				type: Date,
+				required: true
+			},
+			duration: {
+				type: Number,
+				required: true
+			}
+		}],	
+		validate: {
+			validator: checker.isEntryOk,
+			message: 'There was an error with your entry'
 		}
-		description: {
-			type: String,
-			required: true
-		},
-		date: {
-			type: Date,
-			required: true
-		},
-		duration: {
-			type: Number,
-			required: true
-		}
-		validate: checker.isEntryOk
-	}]
+	}
 });
 
 userSchema.pre('save', function(next){
