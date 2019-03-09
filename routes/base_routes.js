@@ -47,6 +47,16 @@ module.exports = function(app, db){
 		   res.redirect('/');
 	   });
 	   
+	app.route('/about')
+	   .get((req, res) => {
+		   res.render(process.cwd() + '/views/about');
+	   });
+	   
+	app.route('/contact')
+	   .get((req, res) => {
+		   res.render(process.cwd() + '/views/contact');
+	   });
+	   
     app.route('/profile')
 	   .get(ensureAuthenticated, (req, res) => {
 		   res.render(process.cwd() + '/views/profile.pug', {username: req.user.username});
