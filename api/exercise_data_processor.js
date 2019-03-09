@@ -106,4 +106,4 @@ function DataDisplay(){
 	
 }
 
-module.export = DataDisplay;
+module.exports = DataDisplay;

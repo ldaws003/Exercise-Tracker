@@ -16,7 +16,7 @@ module.exports = function(app, db){
 		   }];
 		   var userData = {
 			   username: req.body.username,
-			   password: req.body.password
+			   password: req.body.password,
 			   security_questions: security_questions,
 			   exercise_data: []
 		   };

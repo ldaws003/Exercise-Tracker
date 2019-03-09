@@ -3,16 +3,16 @@
 const mongodbo = require('mongodb');
 const mongoose = require('mongoose');
 const User = require('../schema/user_schema.js');
-const express = require('exrpess');
+const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const DataDisplay = require('../api/exercise_data_processor.js');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+/*app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));*/
 const connection = process.env.DB;
 
-var dataDisplay = DataDisplay();
+var dataDisplay = new DataDisplay();
 
 router.post('/', function(req,res,next){
 	

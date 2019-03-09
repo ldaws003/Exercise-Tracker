@@ -33,7 +33,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var mongOptions = {
 	reconnectTries: 7,
-	reconnectInterval: 1500
+	reconnectInterval: 1500,
+	useNewUrlParser: true
 };
 
 mongoose.connect(process.env.DB, mongOptions);
@@ -59,7 +60,7 @@ app.use(helmet({
 
 app.use('/', router);
 
-mongo.connect(process.env.DB, (err, db) => {
+mongo.connect(process.env.DB, { useNewUrlParser: true }, (err, db) => {
 	if(err) console.log(err);
 	
 	user_authentication(app, db);

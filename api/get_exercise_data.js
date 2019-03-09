@@ -41,7 +41,7 @@ module.exports = function(app){
 				return;
 			}
 			
-			User.findOneAndUpdate({_id: new ObjectID(req.user.id)}, {$push {exercise_data: data}}, {runValidators: true, new: true},(err, doc) => {
+			User.findOneAndUpdate({_id: new ObjectID(req.user.id)}, {$push: {exercise_data: data}}, {runValidators: true, new: true},(err, doc) => {
 				if(err) res.status(500).send({message: "There was an error and your entry wasn't added, please try again."});
 				
 				res.json({message: 'entry added'});				

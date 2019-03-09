@@ -50,7 +50,7 @@ module.exports = function(app){
 		   
 		   var hash = bcrypt.hashSync(req.body.password, saltRounds);
 		   
-		   User.findByIdAndUpdate(new ObjectID(req.user.id), {$set {password: hash}});
+		   User.findByIdAndUpdate(new ObjectID(req.user.id), {$set: {password: hash}});
 	   });
 	   
 	app.route('/api/forgotten_password')
@@ -70,6 +70,6 @@ module.exports = function(app){
 		   
 		   var hash = bcrypt.hashSync(req.body.password, saltRounds);
 		   
-		   User.findByIdAndUpdate(new ObjectID(req.user.id), {$set {password: hash}});
+		   User.findByIdAndUpdate(new ObjectID(req.user.id), {$set: {password: hash}});
 	   });
 }

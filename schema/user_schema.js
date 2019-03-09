@@ -18,7 +18,7 @@ function questionValidator(val){
 	return false;
 }
 
-userSchema = new Schema({
+var userSchema = new Schema({
 	username: {
 		type: String,
 		required: true,
@@ -59,7 +59,7 @@ userSchema = new Schema({
 			category: {
 				type: String,
 				required: true
-			}
+			},
 			description: {
 				type: String,
 				required: true
