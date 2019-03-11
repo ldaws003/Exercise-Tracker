@@ -19,8 +19,18 @@ function Checker(){
 	
 	const illegalChars = /[\W+]/;
 	
+	this.isUsernameOk = function(username){		
+		//testing for the presence of illegal characters	
+		return !(illegalChars.test(username));		
+	};
+	
+	this.isPasswordOk = function(password){
+		//testing for the presence of illegal characters
+		return !(illegalChars.test(password));		
+	};
+	
 	this.isSecurityQuestionsOk = function(security_questions){
-		
+
 		if(security_questions.length !== 2){
 			return false;
 		}
@@ -29,7 +39,7 @@ function Checker(){
 		
 		for(let i = 0; i < security_questions.length; i++){
 			
-			if(SECURITY_QUESTIONS.indexOf(security_questions[i].questions) !== -1){
+			if(SECURITY_QUESTIONS.indexOf(security_questions[i].question) !== -1){
 				count++;
 			}
 			
@@ -44,48 +54,6 @@ function Checker(){
 		}
 		
 		return true;
-	}
-	
-	this.isPasswordOk = function(password){
-		
-		//checking to see if it is a string
-		if(typeof password !== 'string'){
-			return false;
-		}
-		
-		//checking for illegal characters
-		if(illegalChars.test(password)){
-			return false;
-		}
-		
-		
-		if(!(8 < password.length <= 16)){
-			return false;			
-		}
-		
-		
-		return true;
-		
-	};
-	
-	this.isUsernameOk = function(username){
-		
-		//checking to see if it is a string
-		if(typeof username !== 'string'){
-			return false;
-		}
-		
-		//checking for illegal characters
-		if(illegalChars.test(username)){
-			return false;
-		}
-		
-		if(!(5 < username.length <= 16)){
-			return false;			
-		}
-		
-		return true;
-		
 	};
 	
 	this.isEntryOk = function(entryExercise){
