@@ -8,6 +8,7 @@ html
 		meta(name="description", content="self-help web app")
 		meta(http-equiv='X-UA-Compatible', content='IE-edge')
 		meta(name='viewport', content='width=device-width, initial-scale=1')
+		meta(http-equiv='Content-Language' content='en')
 		
 	body
 		header
@@ -41,9 +42,4 @@ html
 		mauris magna. Vivamus a tellus quam. Orci varius natoque penatibus et magnis dis parturient montes, 
 		nascetur ridiculus mus.
 		
-	p Sign Up
-	form(action='/register', method='post')
-		input(type='text', name='username', required)
-		input(type='password', name='password', required)
-		input(type='password', name='retyped_password', required)
-		input(type='submit' name='Submit' value='registered')
+	a(href='/register') Sign Up
