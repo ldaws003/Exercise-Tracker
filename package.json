@@ -13,7 +13,7 @@
 		"start": "node server.js"
 	},
 	"dependencies": {
-		"angular": "^1.7.7",
+		"vue": "^2.6.8",
 		"bcrypt": "^3.0.4",
 		"body-parser": "^1.18.3",
 		"bootstrap": "^4.3.1",
@@ -27,19 +27,16 @@
 		"moment": "2.24.0",
 		"mongodb": "^3.1.0",
 		"mongoose": "^5.4.13",
-		"npm": "^6.9.0",
 		"passport": "^0.4.0",
 		"passport-local": "^1.0.0",
 		"passport.socketio": "^3.7.0",
 		"pug": "^2.0.3",
-		"react": "^16.8.1",
-		"react-dom": "^16.8.1",
-		"react-redux": "6.0.0",
 		"redux": "4.0.1",
-		"socket.io": "^2.2.0",
 		"zombie": "^6.1.4",
-		"mocha":"^6.0.2",
-		"chai":"^4.2.0"
+		"mocha": "^6.0.2",
+		"chai": "^4.2.0",
+		"jquery": "^3.3.1",
+		"popper.js": "^1.14.3"
 	},
 	"engines": {
 		"node": "4.4.3"
