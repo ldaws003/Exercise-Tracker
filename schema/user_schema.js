@@ -24,6 +24,8 @@ var userSchema = new Schema({
 		required: true,
 		trim: true,
 		unique: true,
+		minLength: 5,
+		maxLength: 16,
 		validate: {
 			validator: checker.isUsernameOk,
 			message: 'There was an error with your username'
@@ -32,6 +34,9 @@ var userSchema = new Schema({
 	password: {
 		type: String,
 		required: true,
+		trim: true,
+		minLength: 8,
+		maxLength: 16,
 		validate: {
 			validator: checker.isPasswordOk,
 			message: 'There was an error with your password'
@@ -62,7 +67,8 @@ var userSchema = new Schema({
 			},
 			description: {
 				type: String,
-				required: true
+				required: true,
+				trim: true
 			},
 			date: {
 				type: Date,
@@ -72,20 +78,16 @@ var userSchema = new Schema({
 				type: Number,
 				required: true
 			}
-		}],	
-		validate: {
+		}]
+		/*,validate: {
 			validator: checker.isEntryOk,
 			message: 'There was an error with your entry'
-		}
+		}*/
 	}
 });
 
 userSchema.pre('save', function(next){
 	var user = this;
-	
-	sanitzer.sanitizeUsername(user);
-	sanitizer.sanitizePassword(user);
-	sanitizer.sanitizeEntry(user);
 	
 	bcrypt.hash(user.password, saltRounds, function(err, hash){
 		if(err){
