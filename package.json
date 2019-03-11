@@ -36,7 +36,10 @@
 		"react-dom": "^16.8.1",
 		"react-redux": "6.0.0",
 		"redux": "4.0.1",
-		"socket.io": "^2.2.0"
+		"socket.io": "^2.2.0",
+		"zombie": "^6.1.4",
+		"mocha":"^6.0.2",
+		"chai":"^4.2.0"
 	},
 	"engines": {
 		"node": "4.4.3"
