@@ -2,11 +2,17 @@
 
 const User = require('../schema/user_schema.js');
 const ObjectId = require('mongodb').ObjectID;
+const Checker = require('./checker.js');
+
+const { body,validationResult } = require('express-validator/check');
+const { sanitizeBody } = require('express-validator/filter');
+
+var checker = new Checker();
 
 module.exports = function(app){
-	//get the data whenever someone goes to their profile
+	//get the data whenever someone goes to their journal
 	app.route('/api/getdata')
-	    .get((req, res) => {
+	    .get(ensureAuthenticated, (req, res) => {
 			if(!req.user){
 				res.status(401).send({
 					message: 'You are not authorized to see this'
@@ -24,7 +30,16 @@ module.exports = function(app){
 	   
 	//updating an entry
 	app.route('/api/updatedata')
-	    .post((req, res) => {
+	    .post(ensureAuthenticated, [
+			sanitizeBody('description').trim().escape(),
+			sanitizeBody('category').trim().escape(),
+			sanitizeBody('duration').trim().escape().toInt(),
+			body('category', 'Invalid category.').isIn(checker.allowedCategories),
+			body('description').isLength({min: 4}).withMessage('Description is too short'),
+			body('duration', 'This has to be a number').isNumeric(),
+			body('date', 'This has to be a date').isISO8601()			
+		],
+		(req, res) => {
 			if(!req.user){
 				res.status(401).send({
 					message: 'You are not authorized to see this'
@@ -34,13 +49,6 @@ module.exports = function(app){
 			
 		    var data = req.body;
 			
-			data.duration = parseInt(data.duration);
-			
-			if(!data.description || !data.date || !data.duration){
-				res.status(400).send({message: 'All fields must be filled out.'});
-				return;
-			}
-			
 			User.findOneAndUpdate({_id: new ObjectID(req.user.id)}, {$push: {exercise_data: data}}, {runValidators: true, new: true},(err, doc) => {
 				if(err) res.status(500).send({message: "There was an error and your entry wasn't added, please try again."});
 				
@@ -49,17 +57,20 @@ module.exports = function(app){
 		})
 		
     //deleting an entry
-	    .delete((req, res) => {
+	    .delete(ensureAuthenticated, [
+			sanitizeBody('description').trim().escape(),
+			sanitizeBody('category').trim().escape(),
+			sanitizeBody('duration').trim().escape().toInt(),
+			body('category', 'Invalid category.').isIn(checker.allowedCategories),
+			body('description').isLength({min: 4}).withMessage('Description is too short'),
+			body('duration', 'This has to be a number').isNumeric(),
+			body('date', 'This has to be a date').isISO8601()		
+		],(req, res) => {
 			
 			if(!req.user){
 				res.status(401).send({
 					message: 'You are not authorized to see this'
 					});
-				return;
-			}
-			
-			if(!data.description || !data.date || !data.duration){
-				res.status(400).send({message: 'All fields must be filled out.'});
 				return;
 			}
 			
@@ -79,5 +90,13 @@ module.exports = function(app){
 				res.json({message: 'entry deleted'});	
 			});
 		});
+		
+	function ensureAuthenticated(req, res, next){
+
+		if(req.isAuthenticated()){
+			return next();
+		}
+		res.redirect('/');
+	};
 	
 };
