@@ -24,8 +24,8 @@ var userSchema = new Schema({
 		required: true,
 		trim: true,
 		unique: true,
-		minLength: 5,
-		maxLength: 16,
+		minlength: 5,
+		maxlength: 16,
 		validate: {
 			validator: checker.isUsernameOk,
 			message: 'There was an error with your username'
@@ -35,8 +35,8 @@ var userSchema = new Schema({
 		type: String,
 		required: true,
 		trim: true,
-		minLength: 8,
-		maxLength: 16,
+		minlength: 8,
+		maxlength: 16,
 		validate: {
 			validator: checker.isPasswordOk,
 			message: 'There was an error with your password'
@@ -79,10 +79,6 @@ var userSchema = new Schema({
 				required: true
 			}
 		}]
-		/*,validate: {
-			validator: checker.isEntryOk,
-			message: 'There was an error with your entry'
-		}*/
 	}
 });
 

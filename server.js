@@ -10,8 +10,6 @@ const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
-const io = require('socket.io');
-const passportio = require('passport.socketio');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const sessionStore = new session.MemoryStore();
@@ -43,8 +41,11 @@ app.use(session({
 	secret: process.env.SESSION_SECRET,
 	resave: true,
 	saveUninitialized: false,
+	cookie: {maxAge: 24 * 60 * 60 * 1000},
 	store: new MongoStore({
-		url: process.env.DB
+		url: process.env.DB,
+		autoRemove: 'interval',
+        autoRemoveInterval: 10
 	})
 }));
 
@@ -62,7 +63,7 @@ app.use('/', router);
 
 mongo.connect(process.env.DB, { useNewUrlParser: true }, (err, db) => {
 	if(err) console.log(err);
-	
+
 	user_authentication(app, db);
 	base_routes(app, db);
 	getExercise(app);
