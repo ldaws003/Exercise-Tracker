@@ -21,8 +21,11 @@ const user_authentication = require('./auth/user_authentication.js');
 const base_routes = require('./routes/base_routes.js');
 const getExercise = require('./api/get_exercise_data.js');
 const deleteUser = require('./api/delete_user.js');
+const expressValidator = require('express-validator');
 
 require('dotenv').config();
+
+app.use(expressValidator());
 
 app.set('view engine', 'pug');
 app.use('/public', express.static(process.cwd() + '/public'));
