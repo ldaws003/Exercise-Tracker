@@ -7,18 +7,21 @@ html
 		meta(name='description' content='exercise tracker profile')
 		meta(http-equiv='X-UA-Compatible', content='IE-edge')
 		meta(name='viewport', content='width=device-width, initial-scale=1')
+		meta(http-equiv='Content-Language' content='en')
 		link(src='https://code.jquery.com/jquery-1.12.4.js')
 		link(src='https://code.jquery.com/ui/1.12.1/jquery-ui.js')
 		
 	body
 		header
-			title Hi, #{username}!
+			h1 Hi, #{username}!
 			
-		include includes/navbar.pug
+		a(href="/logout") logout
+			
+		include ../includes/navbar.pug
 		
 		h2 New Entry
 		
-		include includes/exercise_form.pug			
+		include ../includes/exercise_form.pug			
 				
 	script.
 		$(document).ready(function() {

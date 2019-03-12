@@ -1,7 +1,8 @@
 form(action='/add_entry', method='post')
-		    input(type='hidden', name=#{username}, required)
-			input(type='text', name='description', required)
-			input(type='text', name='duration', required)
-			input(type='text', id='datepicker', required)
-			input(type='submit', name='submit', value='added_entry')
-	
+	label Description of your exercise
+	input(type='text', name='description', required)
+	label Provide the duration of your exercise
+	input(type='text', name='duration', required)
+	label  Choose the date of your exercise (if none given it would be assumed to be the current date)
+	input(type='text', id='datepicker', required)
+	input(type='submit', name='submit', value='added_entry')
