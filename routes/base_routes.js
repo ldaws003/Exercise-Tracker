@@ -43,10 +43,22 @@ module.exports = function(app, db){
 	
 	app.route('/')
 	   .get((req, res) => {
-		   res.render(process.cwd() + '/views/index.pug');
+		   
+		   //check if the user is signed in
+		   if(req.user){
+			   var user = {
+				   username: req.username
+			   };
+			   res.render(process.cwd() + '/views/index.pug', {user: user})
+		   } else {
+			   res.render(process.cwd() + '/views/index.pug');
+		   }		   
 	   });
 	
     app.route('/login')
+	  .get((req,res) => {
+		  res.sendFile(process.cwd() + '/views/login.html');
+	  })
       .post(passport.authenticate('local', { failureRedirect: '/' }), (req,res) => {
         res.redirect('/profile');
       });  
@@ -59,17 +71,26 @@ module.exports = function(app, db){
 	   
 	app.route('/about')
 	   .get((req, res) => {
-		   res.render(process.cwd() + '/views/about');
+		   
+		   if(req.user){
+			   res.render(process.cwd() + '/views/about.pug', {user: true})
+		   } else {
+			   res.render(process.cwd() + '/views/about.pug');
+		   }
 	   });
 	   
 	app.route('/contact')
 	   .get((req, res) => {
-		   res.render(process.cwd() + '/views/contact');
+		   if(req.user){
+			   res.render(process.cwd() + '/views/contact.pug', {user: true});
+		   } else {
+			   res.render(process.cwd() + '/views/contact.pug');			   
+		   }		   
 	   });
 	   
     app.route('/profile')
 	   .get(ensureAuthenticated, (req, res) => {
-		   res.render(process.cwd() + '/views/profile.pug', {username: req.user.username});
+		   res.render(process.cwd() + '/views/profile.pug', {user: true, username: req.user.username});
 	   });
 	
 	function ensureAuthenticated(req, res, next){
