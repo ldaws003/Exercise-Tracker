@@ -92,6 +92,40 @@ module.exports = function(app, db){
 	   .get(ensureAuthenticated, (req, res) => {
 		   res.render(process.cwd() + '/views/profile.pug', {user: true, username: req.user.username});
 	   });
+	   
+	app.route('/profile/journal')
+	    .get(ensureAuthenticated, (req, res) => {
+			User.findById(new ObjectID(req.user._id), (err, user) => {
+				if(err) throw err;
+		
+				var chartData = {
+					aerobic: dataDisplay.makeChart(user, 'aerobic'),
+					strength: dataDisplay.makeChart(user, 'strength'),
+					flexibility: dataDisplay.makeChart(user, 'flexibility'),
+					balance: dataDisplay.makeChart(user, 'balance')			
+				};
+		
+				user.exercise_data = dataDisplay.shown(user, 1, 20);
+		
+				res.render(process.cwd() + '/views/journal.pug', {
+					username: user.username,
+					exercise_data: user.exercise_data,
+					chartData: chartData
+				});
+			});
+		});
+	
+	//this is questionable
+	app.route('/profile/chart')
+	   .get(ensureAuthenticated, (req, res) => {
+		   
+		   User.findById(new ObjectID(req.user._id), (err, user) => {
+			   if(err) throw err;
+			   
+			   user.exercise_data = dataDisplay(user, req.params.pg, 20);
+			   res.json({exercise_data: user.exercise_data});
+		   });
+	   });
 	
 	function ensureAuthenticated(req, res, next){
 

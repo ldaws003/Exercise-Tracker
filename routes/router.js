@@ -55,42 +55,4 @@ router.post('/', function(req,res,next){
 	
 });
 
-router.get('/:profile/journal', function(req, res, next){
-	
-	User.findById(new ObjectID(req.user._id), (err, user) => {
-		if(err) throw err;
-		
-		var chartData = {
-			aerobic: dataDisplay.makeChart(user, 'aerobic'),
-			strength: dataDisplay.makeChart(user, 'strength'),
-			flexibility: dataDisplay.makeChart(user, 'flexibility'),
-			balance: dataDisplay.makeChart(user, 'balance')			
-		};
-		
-		user.exercise_data = dataDisplay.shown(user, 1, 20);
-		
-		res.render(process.cwd() + '/views/journal.pug', {
-			username: user.username,
-			exercise_data: user.exercise_data,
-			chartData: chartData
-		});
-	})
-	
-});
-
-router.get('/:profile/:pg', function(req, res, next){
-	
-	if(!(req.params.pg >= 1)){
-		res.status(404).type('text').send('Invalid page number');
-		return;
-	}
-	
-	User.findById(new ObjectID(req.user._id), (err, user) => {
-		if(err) throw err;
-		
-		user.exercise_data = dataDisplay(user, req.params.pg, 20);
-		res.json({exercise_data: user.exercise_data});
-	});
-});
-
 module.exports = router;
