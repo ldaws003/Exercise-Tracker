@@ -1,11 +1,20 @@
 'use strict'
 
 const passport = require('passport');
+const User = require('../schema/user_schema.js');
 
 module.exports = function(app, db){
 	app.route('/register')
+	   .get((req,res,next) => {
+		   res.sendFile(process.cwd() + '/views/sign_up.html')
+	   })
 	   .post((req, res, next) => {
-		   var security_qestions = [
+		   
+		   if(req.body.password !== req.body.verify_password){
+				res.status(400).send('The passwords must be the same.');
+			}
+		   
+		   var security_questions = [
 		   {
 			   question: req.body.security_question1,
 			   answer: req.body.security_answer1
@@ -24,11 +33,12 @@ module.exports = function(app, db){
 		   var newUser = User(userData);
 		   newUser.save((err) => {
 			   if(err) console.log(err);
+			   next();
 		   });
-	   }, 
+	   },
 	   passport.authenticate('local', { failureRedirect: '/' }),
 	     (req, res, next) => {
-			 res.redirect('profile');
+			 res.redirect('/profile');
 		 });
 	
 	app.route('/')
@@ -63,6 +73,7 @@ module.exports = function(app, db){
 	   });
 	
 	function ensureAuthenticated(req, res, next){
+
 		if(req.isAuthenticated()){
 			return next();
 		}
