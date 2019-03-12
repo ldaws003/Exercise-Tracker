@@ -17,6 +17,13 @@ function Checker(){
 		"What city were you born in?"
 	];
 	
+	this.allowedCategories = [
+		"aerobic",
+		"strength",
+		"flexibility",
+		"balance"
+	];
+	
 	const illegalChars = /[\W+]/;
 	
 	this.isUsernameOk = function(username){		
