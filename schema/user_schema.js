@@ -3,11 +3,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
-const Sanitizer = require('../api/sanitizer.js');
 const Checker = require('../api/checker.js');
 const saltRounds = 12;
 
-var sanitizer = new Sanitizer();
 var checker = new Checker();
 
 
