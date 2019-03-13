@@ -38,8 +38,13 @@ module.exports = function(app, db){
 	   },
 	   passport.authenticate('local', { failureRedirect: '/' }),
 	     (req, res, next) => {
-			 res.redirect('/profile');
+			 res.redirect('/welcome');
 		 });
+		 
+	app.route('/welcome')
+		.get((req, res) => {
+			res.sendFile(process.cwd() + '/views/welcome.html');
+		})
 	
 	app.route('/')
 	   .get((req, res) => {
