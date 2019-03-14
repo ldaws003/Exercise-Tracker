@@ -26,4 +26,24 @@ html
 	script.
 		$(document).ready(function() {
 			$( "#datepicker" ).datepicker();
+			$("#exercise_form").submit(function(e){
+				var time2 = document.getElementById('duration2').valueAsNumber;
+				var time1 = document.getElementById('duration1').valueAsNumber;
+				var timeDuration = (time2 - time1)/1000;
+				if(timeDuration < 0){alert('The second time submission should be after the first!'); return;}
+				var data = {
+					category: this.category,
+					date: this.date,
+					description: this.description,
+					duration: timeDuration
+				};
+				$.ajax({
+					type: "PUT",
+					url: '/api/updatedata',
+					data: data
+					success: function(data){alert('Your entry was successfully submitted')},
+					error: function(data){alert(data)}
+				});
+				e.preventDefault();
+			});
 		});
