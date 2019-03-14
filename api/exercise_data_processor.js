@@ -60,7 +60,7 @@ function DataDisplay(){
 					}
 				}
 				
-				dataObj.exerciseAmounts.push(sumDur);
+				dataObj.exerciseAmounts.push(Math.round(sumDur/60));
 				dataObj.dateOfExercise.push(currentDate);
 				
 				if( i > dataPoints.length - 1 ){
