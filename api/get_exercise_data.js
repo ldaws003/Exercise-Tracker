@@ -30,10 +30,9 @@ module.exports = function(app){
 	   
 	//updating an entry
 	app.route('/api/updatedata')
-	    .post(ensureAuthenticated, [
+	    .put(ensureAuthenticated, [
 			sanitizeBody('description').trim().escape(),
 			sanitizeBody('category').trim().escape(),
-			sanitizeBody('duration').trim().escape().toInt(),
 			body('category', 'Invalid category.').isIn(checker.allowedCategories),
 			body('description').isLength({min: 4}).withMessage('Description is too short'),
 			body('duration', 'This has to be a number').isNumeric(),
@@ -42,7 +41,7 @@ module.exports = function(app){
 		(req, res) => {
 			if(!req.user){
 				res.status(401).send({
-					message: 'You are not authorized to see this'
+					message: 'You are not authorized to update this.'
 					});
 				return;
 			}
