@@ -71,7 +71,7 @@ function DataDisplay(){
 			
 		}
 				
-		dataPoints.dateOfExercise = dataPoints.dateOfExercise.map( ele => moment(ele).format('MM/DD/YYYY'));
+		dataObj.dateOfExercise = dataObj.dateOfExercise.map( ele => moment(ele).format('MM/DD/YYYY'));
 		
 		var chartColors = {
 			"aerobic": {borderColors: "rgba(158, 158, 158, 1)", backgroundColor: "rgba(196, 196, 196, 0.91)"},
@@ -83,11 +83,11 @@ function DataDisplay(){
 		var type = 'line';
 		
 		var data = {
-			labels: dataPoints.dateOfExercise,
+			labels: dataObj.dateOfExercise,
 			datasets: [
 				{
 					label: category[0].toUpperCase() + category.slice(1).toLowerCase(),
-					data: dataPoints.exerciseAmounts,
+					data: dataObj.exerciseAmounts,
 					borderColors: chartColors[category].borderColors,
 					backgroundColor: chartColors[category].backgroundColor
 				}
