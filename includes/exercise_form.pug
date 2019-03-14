@@ -11,7 +11,7 @@ form(id="exercise_form" action='/add_entry', method='post')
 	input(type='time' name='duration1' min="00:00" max="24:00" required)
 	p to
 	input(type='time' name='duration2' min="00:00" max="24:00" required)
-	label Choose the date of your exercise (if none given it would be assumed to be the current date)
+	label Choose the date of your exercise
 	input(type='text', id='datepicker', name="date", required)
 	input(type='submit', name='submit', value='added_entry')
 	
