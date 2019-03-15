@@ -21,10 +21,109 @@ html
 		
 		h2 New Entry
 		
-		include ../includes/exercise_form.pug			
+		form(id="exercise_form" action='/add_entry', method='post')
+			label Choose the category of your exercise
+			select(name="category" required)
+				option(selected) aerobic
+				option strength
+				option flexibility
+				option balance
+			label Description of your exercise
+			input(type='text', name='description', required)
+			label Provide the duration of your exercise
+			input(type='time' name='duration1' min="00:00" max="24:00" required)
+			p to
+			input(type='time' name='duration2' min="00:00" max="24:00" required)
+			label Choose the date of your exercise
+			input(type='text', id='datepicker', name="date", required)
+			input(type='submit', name='submit', value='added_entry')
+
+		h2 Progress Chart
+		
+		div(id="chartContainer")
+			canvas(id="progressChart" width="400" height="400")
+			ul#buttonHolder
+				button(id="aerobicChart") Aerobic
+				button(id="strengthChart") Strength
+				button(id="flexibilityChart") Flexibility
+				button(id="balanceChart") Balance
 				
+		- var ctx = document.getElementById('aerobicChart').getContext('2d');
+		- var chart = new Chart(ctx, chartData.aerobic);
+		
+		div#journal		
+			for n, i in exercise_data
+				div.dataContainer
+					p=n.date
+					p=n.description
+					p=n.duration
+					p=n.category
+		
+		- var x = 0;
+		
+		ul
+			while x < max
+				-x++
+				a(id=x+"get")=x
 	script.
 		$(document).ready(function() {
+		
+			
+			
+			for(let i = 0; i < max; i++){
+				$((i + 1)+"get").click(function(e){
+					$.ajax({
+						type: 'GET',
+						url: '/api/getdata',
+						data: i + 1,
+						success: function(data){
+							var html = [];
+							data.forEach((ele) => {
+								html.push('<div class="dataContainer">');
+								html.push('<p>'+ele.data+'</p><p>'+ele.description+'</p>');
+								html.push('<p>'+ele.duration+'</p><p>'+ele.category+'</p></div>');
+							});
+							$('#journal').html(html.join(''));
+						},
+						error: function(data){
+							alert(data)
+						}
+					});
+				})
+			}
+			
+			var buttons = [
+				"#aerobicChart",
+				"#strengthChart",
+				"#flexibilityChart",
+				"#balanceChart"			
+			];
+			for(let i = 0; i < buttons.length; i++){
+				(function(button){
+					
+					$(button).click(function(e){
+						$.ajax({
+							type: 'GET',
+							url: '/api/getchart',
+							data: $(button).text.toLowerCase(),
+							success: function(data){
+								chart.data = data.data;
+								chart.options = data.option;
+								chart.update();
+							},
+							error: function(data){
+								alert(data);
+							}
+						});
+						e.preventDefault;
+				}})(buttons[i]));
+				
+			}
+
+			$.ajax({
+				type: 'GET',
+				url: ''
+			});
 			$( "#datepicker" ).datepicker();
 			$("#exercise_form").submit(function(e){
 				var time2 = document.getElementById('duration2').valueAsNumber;
