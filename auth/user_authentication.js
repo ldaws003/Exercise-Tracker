@@ -6,7 +6,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('../schema/user_schema');
 
-module.exports = function(app, db){
+module.exports = function(app){
 	passport.serializeUser((user, done) => {
 
 		done(null, user._id);

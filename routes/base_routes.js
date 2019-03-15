@@ -2,8 +2,11 @@
 
 const passport = require('passport');
 const User = require('../schema/user_schema.js');
+const DataDisplay = require('../api/exercise_data_processor.js');
 
-module.exports = function(app, db){
+const dataDisplay = new DataDisplay();
+
+module.exports = function(app){
 	app.route('/register')
 	   .get((req,res,next) => {
 		   res.sendFile(process.cwd() + '/views/sign_up.html')
@@ -95,12 +98,8 @@ module.exports = function(app, db){
 	   
     app.route('/profile')
 	   .get(ensureAuthenticated, (req, res) => {
-		   res.render(process.cwd() + '/views/profile.pug', {user: true, username: req.user.username});
-	   });
-	   
-	app.route('/profile/journal')
-	    .get(ensureAuthenticated, (req, res) => {
-			User.findById(new ObjectID(req.user._id), (err, user) => {
+		   
+		   User.findById(new ObjectID(req.user._id), (err, user) => {
 				if(err) throw err;
 		
 				var chartData = {
@@ -109,27 +108,18 @@ module.exports = function(app, db){
 					flexibility: dataDisplay.makeChart(user, 'flexibility'),
 					balance: dataDisplay.makeChart(user, 'balance')			
 				};
+				
+				var max = dataDisplay.maxPages(user, 10);
 		
-				user.exercise_data = dataDisplay.shown(user, 1, 20);
-		
-				res.render(process.cwd() + '/views/journal.pug', {
-					username: user.username,
-					exercise_data: user.exercise_data,
-					chartData: chartData
-				});
-			});
-		});
-	
-	//this is questionable
-	app.route('/profile/chart')
-	   .get(ensureAuthenticated, (req, res) => {
+				user.exercise_data = dataDisplay.shown(user, 1, 10);
 		   
-		   User.findById(new ObjectID(req.user._id), (err, user) => {
-			   if(err) throw err;
-			   
-			   user.exercise_data = dataDisplay(user, req.params.pg, 20);
-			   res.json({exercise_data: user.exercise_data});
-		   });
+				res.render(process.cwd() + '/views/profile.pug', {
+					user: true,
+					username: req.user.username,
+					exercise_data: user.exercise_data,
+					chartData: chartData,
+					maxPages: max
+				});
 	   });
 	
 	function ensureAuthenticated(req, res, next){
