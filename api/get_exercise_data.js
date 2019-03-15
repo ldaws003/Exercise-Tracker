@@ -3,6 +3,8 @@
 const User = require('../schema/user_schema.js');
 const ObjectId = require('mongodb').ObjectID;
 const Checker = require('./checker.js');
+const DataDisplay = require('./exercise_data_processor.js');
+const dataDisplay = new DataDisplay();
 
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
@@ -12,21 +14,40 @@ var checker = new Checker();
 module.exports = function(app){
 	//get the data whenever someone goes to their journal
 	app.route('/api/getdata')
-	    .get(ensureAuthenticated, (req, res) => {
+	    .get(ensureAuthenticated, [
+			sanitizeBody('page').trim().escape(),
+			body('page', 'This has to be a number').isNumeric()
+		],(req, res) => {
 			if(!req.user){
 				res.status(401).send({
 					message: 'You are not authorized to see this'
 					});
 				return;
 			}
-			
+						
 			User.findById(new ObjectID(req.user.id), {security_questions: 1}, {runValidators: true, lean: true},(err, doc) => {
 				if(err) res.status(500).send({message: 'There was an error, please try again.'}); return;
-				res.json(doc);
+				
+				doc.exercise_data = dataDisplay.shown(doc, req.body.page, 10);
+				res.json(doc.exercise_data);
 			});
 			
 			
 		});
+	
+	app.route('/api/getchart')
+		.get(ensureAuthenticated, [
+			sanitizeBody('category').trim().escape(),
+			body('category', 'Invalid category.').isIn(checker.allowedCategories)
+		],(req, res) => {
+			User.findById(new ObjectID(req.user.id), {lean: true}, (err, docs) => {
+				if(err) res.status(500).send({message: 'There was an error, please try again.'}); return;
+				
+				var chartData = dataDisplay.makeChart(docs, req.body.category)
+				res.json(chartData);
+			});
+		})
+
 	   
 	//updating an entry
 	app.route('/api/updatedata')
