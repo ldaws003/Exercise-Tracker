@@ -103,10 +103,10 @@ module.exports = function(app){
 				if(err) throw err;
 		
 				var chartData = {
-					aerobic: dataDisplay.makeChart(user, 'aerobic'),
+					aerobic: dataDisplay.makeChart(user, 'aerobic')/*,
 					strength: dataDisplay.makeChart(user, 'strength'),
 					flexibility: dataDisplay.makeChart(user, 'flexibility'),
-					balance: dataDisplay.makeChart(user, 'balance')			
+					balance: dataDisplay.makeChart(user, 'balance')*/	
 				};
 				
 				var max = dataDisplay.maxPages(user, 10);
