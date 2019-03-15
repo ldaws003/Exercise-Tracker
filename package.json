@@ -13,7 +13,6 @@
 		"start": "node server.js"
 	},
 	"dependencies": {
-		"vue": "^2.6.8",
 		"bcrypt": "^3.0.4",
 		"body-parser": "^1.18.3",
 		"bootstrap": "^4.3.1",
@@ -37,7 +36,6 @@
 		"chai": "^4.2.0",
 		"jquery": "^3.3.1",
 		"popper.js": "^1.14.3",
-		"bootstrap-vue": "^2.0.0-rc.14",
 		"express-validator": "^5.3.1"
 	},
 	"engines": {
