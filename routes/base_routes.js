@@ -106,10 +106,7 @@ module.exports = function(app){
 
 				if(user.exercise_data.length != 0){
 					var chartData = {
-						aerobic: dataDisplay.makeChart(user, 'aerobic')/*,
-						strength: dataDisplay.makeChart(user, 'strength'),
-						flexibility: dataDisplay.makeChart(user, 'flexibility'),
-						balance: dataDisplay.makeChart(user, 'balance')*/	
+						aerobic: dataDisplay.makeChart(user, 'aerobic')	
 					};					
 				}
 		
