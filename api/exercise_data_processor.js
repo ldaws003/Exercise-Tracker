@@ -10,7 +10,9 @@ function DataDisplay(){
 		if(!perPage || perPage < 1) perPage = 20;
 		var n = (pageNum - 1) * perPage;
 		var m = n + perPage;
-		return user.exercise_data.slice(n,m);
+		return user.exercise_data.sort((a,b) => {
+			return b.date - a.date;
+		}).slice(n,m);
 	};
 	
 	//maximum amount of pages 
@@ -23,10 +25,10 @@ function DataDisplay(){
 		
 		//filters the data only returning the category of choice then sorts it by date
 		var dataPoints = user.exercise_data.filter((ele) => ele.category === category).sort((a,b) => {
-			/*var a = new Date(a.date);
-			var b = new Date(b.date);*/
-			return b - a;
+			return a.date - b.date;
 		});
+
+		
 		
 		var dataObj = {
 			exerciseAmounts: [],
@@ -92,7 +94,7 @@ function DataDisplay(){
 					backgroundColor: chartColors[category].backgroundColor
 				}
 			]
-		};		
+		};
 		
 		var options = {
 			showLines: true,
