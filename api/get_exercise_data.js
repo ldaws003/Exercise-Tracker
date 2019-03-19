@@ -15,8 +15,8 @@ module.exports = function(app){
 	//get the data whenever someone goes to their journal
 	app.route('/api/getdata')
 	    .get(ensureAuthenticated, [
-			sanitizeBody('page').trim().escape(),
-			body('page', 'This has to be a number').isNumeric()
+			//check to see if it is above 0
+			query('page', 'This has to be a number').isNumeric()
 		],(req, res) => {
 			if(!req.user){
 				res.status(401).send({
@@ -24,12 +24,12 @@ module.exports = function(app){
 					});
 				return;
 			}
-				
-			User.findById(new ObjectID(req.user._id), {security_questions: 1}, {runValidators: true, lean: true},(err, doc) => {
-				if(err) res.status(500).send({message: 'There was an error, please try again.'}); return;
-				
-				doc.exercise_data = dataDisplay.shown(doc, req.body.page, 10);
-				res.json(doc.exercise_data);
+			
+			User.findById(new ObjectID(req.user._id), {exercise_data: 1}, (err, doc) => {
+				if(err){res.status(500).send({message: 'There was an error, please try again.'}); return;}
+
+				doc.exercise_data = dataDisplay.shown(doc, req.query.page, 10);
+				res.json({update: doc.exercise_data});
 			});
 			
 			
@@ -44,8 +44,16 @@ module.exports = function(app){
 			User.findById(new ObjectID(req.user._id), (err, docs) => {
 				if(err){ res.status(500).send({message: 'There was an error, please try again.'}); return;}
 				
-				var chartData = dataDisplay.makeChart(docs, req.query.category);
-				res.json(chartData);
+				var canChart = docs.exercise_data.filter((ele) => ele.category === req.query.category).length;
+				var chartData;
+				if(canChart){
+					chartData = dataDisplay.makeChart(docs, req.query.category);
+				} else {
+					chartData = null;
+				}
+				
+				
+				res.json({update:chartData});
 			});
 		});
 
@@ -73,7 +81,7 @@ module.exports = function(app){
 			User.findOneAndUpdate({_id: new ObjectID(req.user._id)}, {$push: {exercise_data: data}}, {new: true},(err, doc) => {
 				if(err){res.status(500).send({message: "There was an error and your entry wasn't added, please try again."});}
 				
-				res.json({msg: 'entry added'});				
+				res.json({update: data, max: dataDisplay.maxPages(doc, 10)});				
 			});
 		})
 		
