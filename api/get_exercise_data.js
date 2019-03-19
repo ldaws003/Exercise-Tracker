@@ -1,12 +1,12 @@
 'use strict'
 
 const User = require('../schema/user_schema.js');
-const ObjectId = require('mongodb').ObjectID;
+const ObjectID = require('mongodb').ObjectID;
 const Checker = require('./checker.js');
 const DataDisplay = require('./exercise_data_processor.js');
 const dataDisplay = new DataDisplay();
 
-const { body,validationResult } = require('express-validator/check');
+const { query,body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 
 var checker = new Checker();
@@ -24,8 +24,8 @@ module.exports = function(app){
 					});
 				return;
 			}
-						
-			User.findById(new ObjectID(req.user.id), {security_questions: 1}, {runValidators: true, lean: true},(err, doc) => {
+				
+			User.findById(new ObjectID(req.user._id), {security_questions: 1}, {runValidators: true, lean: true},(err, doc) => {
 				if(err) res.status(500).send({message: 'There was an error, please try again.'}); return;
 				
 				doc.exercise_data = dataDisplay.shown(doc, req.body.page, 10);
@@ -37,16 +37,17 @@ module.exports = function(app){
 	
 	app.route('/api/getchart')
 		.get(ensureAuthenticated, [
-			sanitizeBody('category').trim().escape(),
-			body('category', 'Invalid category.').isIn(checker.allowedCategories)
+			query('category').trim().escape(),
+			query('category', 'Invalid category.').isIn(checker.allowedCategories)
 		],(req, res) => {
-			User.findById(new ObjectID(req.user.id), {lean: true}, (err, docs) => {
-				if(err) res.status(500).send({message: 'There was an error, please try again.'}); return;
+			
+			User.findById(new ObjectID(req.user._id), (err, docs) => {
+				if(err){ res.status(500).send({message: 'There was an error, please try again.'}); return;}
 				
-				var chartData = dataDisplay.makeChart(docs, req.body.category)
+				var chartData = dataDisplay.makeChart(docs, req.query.category);
 				res.json(chartData);
 			});
-		})
+		});
 
 	   
 	//updating an entry
@@ -69,10 +70,10 @@ module.exports = function(app){
 			
 		    var data = req.body;
 			
-			User.findOneAndUpdate({_id: new ObjectID(req.user.id)}, {$push: {exercise_data: data}}, {runValidators: true, new: true},(err, doc) => {
-				if(err) res.status(500).send({message: "There was an error and your entry wasn't added, please try again."});
+			User.findOneAndUpdate({_id: new ObjectID(req.user._id)}, {$push: {exercise_data: data}}, {new: true},(err, doc) => {
+				if(err){res.status(500).send({message: "There was an error and your entry wasn't added, please try again."});}
 				
-				res.json({message: 'entry added'});				
+				res.json({msg: 'entry added'});				
 			});
 		})
 		
@@ -104,10 +105,10 @@ module.exports = function(app){
 								}
 							};
 			
-			User.findOneAndUpdate({_id: ObjectID(req.user.id)}, setObject, {runValidators: true, new: true}, (err, doc) => {
-				if(err) res.status(500).send({message: "There was an error and your entry wasn't deleted, please try again."}); return;
+			User.findOneAndUpdate({_id: ObjectID(req.user._id)}, setObject, {new: true}, (err, doc) => {
+				if(err){res.status(500).send({message: "There was an error and your entry wasn't deleted, please try again."}); return;}
 				
-				res.json({message: 'entry deleted'});	
+				res.json({msg: 'entry deleted'});	
 			});
 		});
 		
