@@ -28,6 +28,11 @@ module.exports = function(app){
 				if(err){return done(err);}
 				if(!user){return done(null, false);}
 				if(!bcrypt.compareSync(password, user.password)){return done(null, false);}
+				var passUser = {
+					_id: user._id,
+					username: user.username,
+					password: user.password
+				}
 				return done(null, user);
 			});
 		}
