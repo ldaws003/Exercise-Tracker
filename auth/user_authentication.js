@@ -16,7 +16,12 @@ module.exports = function(app){
 		User.findOne(
 		{_id: new ObjectID(id)},
 		(err, doc) => {
-			done(null, doc);
+			var passUser = {
+					_id: doc._id,
+					username: doc.username,
+					password: doc.password
+			};
+			done(null, passUser);
 		}
 	  );		
 	});
@@ -28,11 +33,6 @@ module.exports = function(app){
 				if(err){return done(err);}
 				if(!user){return done(null, false);}
 				if(!bcrypt.compareSync(password, user.password)){return done(null, false);}
-				var passUser = {
-					_id: user._id,
-					username: user.username,
-					password: user.password
-				}
 				return done(null, user);
 			});
 		}
