@@ -53,37 +53,86 @@ html
 		div#journal
 			for n, i in exercise_data
 				div.dataContainer
-					p=moment(n.date).format('MM/DD/YYYY')
-					p=n.description
-					p=moment.duration(n.duration, 'seconds').humanize()
-					p=n.category
+					p.date=moment(n.date).format('MM/DD/YYYY')
+					p.description=n.description
+					p.duration=moment.duration(n.duration, 'seconds').humanize()
+					p.category=n.category
 		
 		- var x = 0;
 		
-		ul
+		ul#pagination
 			while x < max
 				-x++
-				a(id=x+"get")=x
+				if x == 1
+					a(id=x+"get" class="activePage")=x
+				else
+					a(id=x+"get")=x
 	script.
 		$(document).ready(function() {
 		
+			//function to get a new page of journal entries
+			function onClickPage (){
+				$.ajax({
+					method: "GET",
+					url: "/api/getdata",
+					data: {page: parseInt(this.text)},
+					success: function(data){
+						if(data.update){
+							var html = [];
+							data.update.forEach((ele) => {
+								html.push("<div class='dataContainer'>");
+								html.push("<p class='date'>"+moment(ele.date).format('MM/DD/YYYY')+"</p>");
+								html.push("<p class='description'>"+ele.description+"</p>");
+								html.push("<p class='duration'>"+moment.duration(ele.duration, 'seconds').humanize()+"</p>");
+								html.push("<p class='category'>"+ele.category+"</p>");
+								html.push("</div>");
+							});
+							$("#journal").html(html.join(''));
+							
+							var maxPage = document.getElementById("pagination").innerHTML.match(/[\d]get/g);
+							maxPage = maxPage.length;
+							
+							for(let i = 1; i < maxPage; i++){
+								$("#"+i+"get").removeClass("activePage");
+							}
+							
+							$(this.id).addClass("activePage");
+							
+						}
+						//add response when outside of range
+					},
+					error: function(data){
+						//add response to error
+					}
+				});	
+			}
+			
+			
+			for(let i = 1; i <= #{max}; i++){
+				document.getElementById(i+"get").onclick = onClickPage;
+			}
+			
+			var chart;		
 			//creating the chart
 			$.ajax({
 				type: 'GET',
 				url: '/api/getchart',
 				data: {category:"aerobic"},
 				success: function(chartData){
-					var ctx = document.getElementById('progressChart').getContext('2d');
-					chartData.options.scales = {
-						yAxes: [{
-							ticks: {
-								callback: function(value, index, values){
-									return value + ' min.';
+					if(chartData.update){
+						var ctx = document.getElementById('progressChart').getContext('2d');
+						chartData.update.options.scales = {
+							yAxes: [{
+								ticks: {
+									callback: function(value, index, values){
+										return value + ' min.';
+									}
 								}
-							}
-						}]
+							}]
+						}
+						chart = new Chart(ctx, chartData.update);
 					}
-					var chart = new Chart(ctx, chartData);
+					//add something when data is null
 				},
 				failure: function(data){
 					console.log(data);
@@ -129,14 +178,18 @@ html
 						$.ajax({
 							type: 'GET',
 							url: '/api/getchart',
-							data: $(button).text().toLowerCase(),
+							data: {category: $(button).text().toLowerCase()},
 							success: function(data){
-								chart.data = data.data;
-								chart.options = data.option;
-								chart.update();
+								if(data.update){
+									chart.data = data.update.data;
+									chart.options = data.update.option;
+									chart.update();
+								}
+								
+								//add something when data is null
 							},
 							error: function(data){
-								alert(data);
+								alert(data.msg);
 							}
 						});
 						e.preventDefault;
@@ -167,9 +220,68 @@ html
 					url: '/api/updatedata',
 					data: data,
 					success: function(data){
+
+						//re-get the updated the chart
+						$.ajax({
+							type: 'GET',
+							url: '/api/getchart',
+							data: {category:"aerobic"},
+							success: function(chartData){
+								if(chartData.update){
+									var ctx = document.getElementById('progressChart').getContext('2d');
+									chart.data = chartData.update.data;
+									chart.update();
+								}
+								//add something when data is null								
+							},
+							failure: function(data){
+								//delete canvas and replace it with a text saying "no entries"
+							}
+						});
+						
+						//get data within the journal
+						var journalData = document.getElementsByClassName("dataContainer");
+						var updatedJournal = [...journalData].map((ele) => {
+							//go through each node and create a return obj with the data
+							var extracted = ele.outerHTML.match(/<p[\w\s+="-']*>[\s\w\/]*<\/p>/g);
+							var toReturn = {
+								date: extracted[0].replace(/<\/*p[\w\s+="-']*>/g,''),
+								description: extracted[1].replace(/<\/*p[\w\s+="-']*>/g,''),
+								duration: extracted[2].replace(/<\/*p[\w\s+="-']*>/g,''),
+								category: extracted[3].replace(/<\/*p[\w\s+="-']*>/g,'')
+							};
+
+							return toReturn;
+						})
+						
+						updatedJournal.push(data.update);
+						
+						updatedJournal.sort((a, b) => {
+							return  new Date(b.date) - new Date(a.date);
+						}).slice(0, 10);
+
+						var html = [];
+						updatedJournal.forEach((ele) => {
+							html.push("<div class='dataContainer'>");
+							html.push("<p class='date'>"+ele.date+"</p>");
+							html.push("<p class='description'>"+ele.description+"</p>");
+							html.push("<p class='duration'>"+ele.duration+"</p>");
+							html.push("<p class='category'>"+ele.category+"</p>");
+							html.push("</div>");
+						});
+						//once you have it then place it into the journal
+						
+						$("#journal").html(html.join(''));
+						//update the max and if needed update the pagination
+						var phtml = [];
+						for(let i = 1; i <= data.max; i++){
+							phtml.push('<a id="'+i+'get")>'+i+'</a>');
+						}
+						
+						$("#pagination").html(phtml.join(''));
 						alert('Your entry was successfully submitted')
 					},
-					error: function(data){console.log(data);alert(data)}
+					error: function(data){alert(data)}
 				});
 				e.preventDefault();
 			});
