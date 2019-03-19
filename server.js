@@ -31,6 +31,7 @@ app.set('view engine', 'pug');
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.locals.moment = require('moment');
 
 var mongOptions = {
 	reconnectTries: 7,
