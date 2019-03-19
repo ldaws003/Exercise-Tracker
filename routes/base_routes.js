@@ -3,6 +3,8 @@
 const passport = require('passport');
 const User = require('../schema/user_schema.js');
 const DataDisplay = require('../api/exercise_data_processor.js');
+const ObjectID = require('mongodb').ObjectID;
+const moment = require('moment');
 
 const dataDisplay = new DataDisplay();
 
@@ -101,26 +103,31 @@ module.exports = function(app){
 		   
 		   User.findById(new ObjectID(req.user._id), (err, user) => {
 				if(err) throw err;
+
+				if(user.exercise_data.length != 0){
+					var chartData = {
+						aerobic: dataDisplay.makeChart(user, 'aerobic')/*,
+						strength: dataDisplay.makeChart(user, 'strength'),
+						flexibility: dataDisplay.makeChart(user, 'flexibility'),
+						balance: dataDisplay.makeChart(user, 'balance')*/	
+					};					
+				}
 		
-				var chartData = {
-					aerobic: dataDisplay.makeChart(user, 'aerobic')/*,
-					strength: dataDisplay.makeChart(user, 'strength'),
-					flexibility: dataDisplay.makeChart(user, 'flexibility'),
-					balance: dataDisplay.makeChart(user, 'balance')*/	
-				};
+				
 				
 				var max = dataDisplay.maxPages(user, 10);
-		
+				
 				user.exercise_data = dataDisplay.shown(user, 1, 10);
-		   
+				
 				res.render(process.cwd() + '/views/profile.pug', {
 					user: true,
 					username: req.user.username,
 					exercise_data: user.exercise_data,
-					chartData: chartData,
-					maxPages: max
+					chartData: !!chartData,
+					max: max
 				});
-	   });
+		   }
+	   )});
 	
 	function ensureAuthenticated(req, res, next){
 
@@ -129,4 +136,4 @@ module.exports = function(app){
 		}
 		res.redirect('/');
 	};
-}
+};
