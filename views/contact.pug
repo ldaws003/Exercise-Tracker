@@ -12,24 +12,32 @@ html
 	body
 		header
 			title Contact
+		
+		div(class="container-fluid")
 			
-		include ../includes/navbar.pug
+			include ../includes/navbar.pug
 		
 		
-		p.
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vestibulum quis nulla 
-			vitae dictum. Ut malesuada venenatis bibendum. Sed suscipit lacus sit amet facilisis volutpat.
-			Pellentesque eros lacus, pulvinar at orci nec, varius viverra odio. Donec ullamcorper porttitor 
-			arcu, non sollicitudin eros. Duis eget porttitor arcu. Sed vel arcu hendrerit, dignissim massa 
-			sed, mattis dui.
+			p.
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vestibulum quis nulla 
+				vitae dictum. Ut malesuada venenatis bibendum. Sed suscipit lacus sit amet facilisis volutpat.
+				Pellentesque eros lacus, pulvinar at orci nec, varius viverra odio. Donec ullamcorper porttitor 
+				arcu, non sollicitudin eros. Duis eget porttitor arcu. Sed vel arcu hendrerit, dignissim massa 
+				sed, mattis dui.
 			
 			
-		p Contact Form
+			p Contact Form
 			
-		form(action='/contact', method='post')
-			input(type='text', name='name', required)
-			input(type='email', name='email', required)
-			input(type='text', name='message', required)
-			input(type='submit', name='submit', value='contact_form')
+			form(action='/contact', method='post')
+				div(class="form-group")
+					label Your Name:
+					input(type='text', class="form-control", name='name', required)
+				div(class="form-group")
+					label Your Email:
+					input(type='email', class="form-control", name='email', required)
+				div(class="form-group")
+					label Message:
+					input(type='text',  class="form-control", name='message', required)
+				input(type='submit', class="btn btn-light btn-block", name='submit', value='contact_form')
 		
 		
