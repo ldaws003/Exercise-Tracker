@@ -1,9 +1,15 @@
-nav
-	a(href="/") Home
-	a(href="/about") About
-	a(href="/contact") Contact
+ul(class="nav nav-tabs")
+	li(class="nav-item")
+		a(class="nav-link" href="/") Home
+	li(class="nav-item")
+		a(class="nav-link" href="/about") About
+	li(class="nav-item")
+		a(class="nav-link" href="/contact") Contact
 	if (user)
-		a(href="/profile") Profile
-		a(href="/logout") Logout
+		li(class="nav-item")
+			a(class="nav-link" href="/profile") Profile
+		li(class="nav-item")
+			a(class="nav-link" href="/logout") Logout
 	else
-		a(href='/login') Login
+		li(class="nav-item")
+			a(class="nav-link" href='/login') Login
