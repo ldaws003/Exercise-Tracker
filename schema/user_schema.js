@@ -93,6 +93,7 @@ userSchema.pre('save', function(next){
 	})
 });
 
+//may remove this
 userSchema.statics.authenticate = function(username, password, callback){
 	User.findOne({username:username ,password: password})
 	    .exec(function(err,user){
