@@ -13,7 +13,7 @@ html
 		link(rel="stylesheet" href="/public/constrict_view.css")
 		link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous")
 		script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous")
-		script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")
+		script(src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous")
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
 		script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.js')
 		
@@ -26,10 +26,10 @@ html
 			div(class="container constrict")
 			
 				header
-					h1 Hi, #{username}!
+					h1(class="mx-auto" style="width:250px") Hi, #{username}!
 
 					
-				div(class="row")
+				div(class="row my-3")
 					div(class="col-md-6")
 						h2 New Entry
 			
@@ -44,15 +44,18 @@ html
 							div(class="form-group")
 								label Description of your exercise
 								textarea( class="form-control" id="description" name='description' required)
-							div(class="form-group")
+							div(class="form-group mx-1")
 								label Provide the duration of your exercise
-								input(type='time' id='duration1' name='duration1' min="00:00" max="24:00" required)
+								input(type='time' class="mx-1" id='duration1' name='duration1' min="00:00" max="24:00" required)
 								p(style={display: "inline"}) to
-								input(type='time' id='duration2' name='duration2' min="00:00" max="24:00" required)
-							div(class="form-group")
-								label Choose the date of your exercise
-								input(type='text' class="form-control" id='datepicker' name="date" required)
-							input(type='submit' class="btn btn-block btn-primary" name='submit' value='add new entry')
+								input(class="mx-1" type='time' id='duration2' name='duration2' min="00:00" max="24:00" required)
+							div(class="from-group")
+								div(class="input-group date")
+									label Choose the date of your exercise
+									input(type='text' class="form-control mx-1 date" id='datepicker' name="date" required)
+									span(class="input-group-addon")
+										span(class="glyphicon glyphicon-calendar")
+							input(type='submit' class="btn my-2 btn-block btn-primary" name='submit' value='add new entry')
 							
 					div(class="col-md-6")
 						h2 Progress Chart
@@ -69,52 +72,68 @@ html
 			
 				div(id="journal" class="row container-fluid")
 					for n, i in exercise_data
-						div(class="dataContainer row")
-							p(class="date col-md-12")=moment(n.date).format('MM/DD/YYYY')
-							p(class="category col-md-12")=n.category
-							p(class="description col-md-12")=n.description
-							p(class="duration col-md-12")=moment.duration(n.duration, 'seconds').humanize()
+						div(class="card m-1")
+							div(class="card-header")
+								p(class="date")=moment(n.date).format('MM/DD/YYYY')
+								p(class="category")="Category: "+n.category
+							div(class="card-body")
+								p(class="description smaller-text")=n.description
+							div(class="card-footer")
+								p(class="duration")="Duration: "+moment.duration(n.duration, 'seconds').humanize()
 							
 			
 				- var x = 0;
 			
-				ul#pagination
+				ul(id="pagination" class="pagination my-2 justify-content-center")
 					while x < max
 						-x++
 						if x == 1
-							a(id=x+"get" class="activePage")=x
+							li(id=x+"" class="page-item active")
+								a(id=x+"get" class="page-link")=x
 						else
-							a(id=x+"get")=x
+							li(id=x+"" class="page-item")
+								a(id=x+"get" class="page-link")=x
 	script.
 		$(document).ready(function() {
 		
+			//adding disabled profile link in the navbar
+			$("#profile").addClass("disabled");
+		
 			//function to get a new page of journal entries
 			function onClickPage (){
+				let id = this.id;
+				let pagenum = parseInt(this.text);
 				$.ajax({
 					method: "GET",
 					url: "/api/getdata",
-					data: {page: parseInt(this.text)},
+					data: {page: pagenum},
 					success: function(data){
 						if(data.update){
 							var html = [];
 							data.update.forEach((ele) => {
-								html.push("<div class='dataContainer'>");
+								html.push("<div class='card m-1'>");
+								html.push("<div class='card-header'>");
 								html.push("<p class='date'>"+moment(ele.date).format('MM/DD/YYYY')+"</p>");
-								html.push("<p class='description'>"+ele.description+"</p>");
-								html.push("<p class='duration'>"+moment.duration(ele.duration, 'seconds').humanize()+"</p>");
-								html.push("<p class='category'>"+ele.category+"</p>");
+								html.push("<p class='category'> Category: "+ele.category+"</p>");
+								html.push("</div>");
+								html.push("<div class='card-body'>");
+								html.push("<p class='description smaller-text'>"+ele.description+"</p>");
+								html.push("</div>");
+								html.push("<div class='card-footer'>");
+								html.push("<p class='duration'> Duration: "+ele.duration+"</p>");
+								html.push("</div>");
 								html.push("</div>");
 							});
 							$("#journal").html(html.join(''));
 							
-							var maxPage = document.getElementById("pagination").innerHTML.match(/[\d]get/g);
+							var maxPage = document.getElementById("pagination").outerHTML.match(/li\s/g);
 							maxPage = maxPage.length;
 							
-							for(let i = 1; i < maxPage; i++){
-								$("#"+i+"get").removeClass("activePage");
+							for(let i = 1; i <= maxPage; i++){
+								$("#"+i).removeClass("active");
 							}
 							
-							$(this.id).addClass("activePage");
+							$("#"+id.replace('get', '')).addClass("active");
 							
 						}
 						//add response when outside of range
@@ -144,7 +163,8 @@ html
 								ticks: {
 									callback: function(value, index, values){
 										return value + ' min.';
-									}
+									},
+									min: 0
 								}
 							}]
 						}
@@ -199,6 +219,7 @@ html
 							data: {category: $(button).text().toLowerCase()},
 							success: function(data){
 								if(data.update){
+									console.log(data);
 									chart.data = data.update.data;
 									chart.options = data.update.option;
 									chart.update();
@@ -219,7 +240,8 @@ html
 			//date picker form entry
 			$("#datepicker").datepicker();
 			
-			//add response to updating 			
+			//add response to updating 
+			//updating the journal cards			
 			$("#exercise_form").submit(function(e){
 				var time2 = document.getElementById('duration2').valueAsNumber;
 				var time1 = document.getElementById('duration1').valueAsNumber;
@@ -280,11 +302,17 @@ html
 
 						var html = [];
 						updatedJournal.forEach((ele) => {
-							html.push("<div class='dataContainer'>");
+							html.push("<div class='card m-1'>");
+							html.push("<div class='card-header'>");
 							html.push("<p class='date'>"+ele.date+"</p>");
-							html.push("<p class='description'>"+ele.description+"</p>");
-							html.push("<p class='duration'>"+ele.duration+"</p>");
-							html.push("<p class='category'>"+ele.category+"</p>");
+							html.push("<p class='category'> Category: "+ele.category+"</p>");
+							html.push("</div>");
+							html.push("<div class='card-body'>");
+							html.push("<p class='description smaller-text'>"+ele.description+"</p>");
+							html.push("</div>");
+							html.push("<div class='card-footer'>");
+							html.push("<p class='duration'> Duration: "+ele.duration+"</p>");
+							html.push("</div>");
 							html.push("</div>");
 						});
 						//once you have it then place it into the journal
@@ -293,7 +321,13 @@ html
 						//update the max and if needed update the pagination
 						var phtml = [];
 						for(let i = 1; i <= data.max; i++){
-							phtml.push('<a id="'+i+'get")>'+i+'</a>');
+							if(i == 1){
+								phtml.push("<li class='page-item active'>");
+							} else {
+								phtml.push("<li class='page-item'>");
+							}							
+							phtml.push('<a id="'+i+'get" class="page-link">'+i+'</a>');
+							phtml.push("</li>");
 						}
 						
 						$("#pagination").html(phtml.join(''));
