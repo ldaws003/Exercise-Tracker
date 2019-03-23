@@ -1,15 +1,15 @@
-ul(class="nav nav-tabs")
+ul(class="nav nav-tabs sticky-top white-background")
 	li(class="nav-item")
-		a(class="nav-link" href="/") Home
+		a(id="home" class="nav-link" href="/") Home
 	li(class="nav-item")
-		a(class="nav-link" href="/about") About
+		a(id="about" class="nav-link" href="/about") About
 	li(class="nav-item")
-		a(class="nav-link" href="/contact") Contact
+		a(id="contact" class="nav-link" href="/contact") Contact
 	if (user)
 		li(class="nav-item")
-			a(class="nav-link" href="/profile") Profile
+			a(id="profile" class="nav-link" href="/profile") Profile
 		li(class="nav-item")
-			a(class="nav-link" href="/logout") Logout
+			a(id="logout" class="nav-link" href="/logout") Logout
 	else
 		li(class="nav-item")
-			a(class="nav-link" href='/login') Login
+			a(id="login" class="nav-link" href='/login') Login
