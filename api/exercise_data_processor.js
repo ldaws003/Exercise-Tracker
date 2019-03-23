@@ -91,7 +91,8 @@ function DataDisplay(){
 					label: category[0].toUpperCase() + category.slice(1).toLowerCase(),
 					data: dataObj.exerciseAmounts,
 					borderColors: chartColors[category].borderColors,
-					backgroundColor: chartColors[category].backgroundColor
+					backgroundColor: chartColors[category].backgroundColor,
+					lineTension: 0
 				}
 			]
 		};

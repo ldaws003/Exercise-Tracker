@@ -5,6 +5,7 @@ const ObjectID = require('mongodb').ObjectID;
 const Checker = require('./checker.js');
 const DataDisplay = require('./exercise_data_processor.js');
 const dataDisplay = new DataDisplay();
+const Contact = require('../schema/contact_schema.js');
 
 const { query,body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
@@ -34,6 +35,15 @@ module.exports = function(app){
 			
 			
 		});
+	
+	app.route('/api/storecontact')
+		.post((req, res) => {
+			var contact = new Contact(req.body);
+			contact.save(function(err){
+				if(err) console.log(err);
+					res.json({message: "Success!"});
+			});
+		})
 	
 	app.route('/api/getchart')
 		.get(ensureAuthenticated, [
