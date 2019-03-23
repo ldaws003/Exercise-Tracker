@@ -3,5 +3,110 @@
 }
 
 .centered {
+	margin: 20px auto;
+}
+
+.white-background {
+	background-color: white;
+}
+
+.y-spacing {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.smaller-text {
+	font-size: 14px;
+}
+
+//height for security questions and input
+.same-height-inputs {
+	height: 25px;
+}
+
+//date picker widget
+.ui-datepicker {
+	background: white; 
+	font-size:11px;
+	padding:10px;
+	width: 300px;
+}
+
+.ui-datepicker table td {
+	text-align:center;
+}
+
+.ui-datepicker a {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.ui-datepicker-prev {
+	border: 2px solid #70f8ff;
+	height: 20px;
+	background: #70f8ff;
+	display: inline;
+}
+
+.ui-datepicker-next {
+	float: right;
+	border: 2px solid #70f8ff;
+	background: #70f8ff;
+	display: inline;
+}
+
+.ui-datepicker-title {
+	text-align: center;
+	font-weight: bold;
 	margin: 0 auto;
+}
+
+.ui-widget.ui-widget-content{
+    border: 1px solid #70f8ff;
+	border-radius: 5px;
+	background: white;
+}
+
+.ui-datepicker th {
+    padding: .7em .3em;
+    text-align: center;
+    font-weight: bold;
+    border: 0;
+    color: black;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+
+.ui-widget-header .ui-state-default{
+    font-weight: normal;
+    color: black;
+}
+
+a.ui-state-default:hover{
+    border: 1px solid white;
+    background: #5bfec8;
+    font-weight: bold;
+    color: black;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active {
+    background: blue;
+    font-weight: bold;
+    color: black;
+}
+
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: 1px solid #dad55e;
+    background: #ac8af5;
+    color: black;
+}
+
+.ui-widget-header {
+    border-bottom: 1px solid #5bfec8;
+    background: white;
+    color: black;
+    font-weight: bold;
 }
