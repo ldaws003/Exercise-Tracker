@@ -1,15 +1,21 @@
-ul(class="nav nav-tabs sticky-top white-background")
-	li(class="nav-item")
-		a(id="home" class="nav-link" href="/") Home
-	li(class="nav-item")
-		a(id="about" class="nav-link" href="/about") About
-	li(class="nav-item")
-		a(id="contact" class="nav-link" href="/contact") Contact
-	if (user)
+nav(class="navbar navbar-expand-md sticky-top")
+
+	ul(class="navbar-nav nav-tabs white-background" style="background-color: white")
+	
+		a(class="navbar-brand")
+			img(src="/assets/free_horizontal_on_white_by_logaster.png" alt="logo" style="width: 85px;")
+			
 		li(class="nav-item")
-			a(id="profile" class="nav-link" href="/profile") Profile
+			a(id="home" class="nav-link" href="/") Home
 		li(class="nav-item")
-			a(id="logout" class="nav-link" href="/logout") Logout
-	else
+			a(id="about" class="nav-link" href="/about") About
 		li(class="nav-item")
-			a(id="login" class="nav-link" href='/login') Login
+			a(id="contact" class="nav-link" href="/contact") Contact
+		if (user)
+			li(class="nav-item")
+				a(id="profile" class="nav-link" href="/profile") Profile
+			li(class="nav-item")
+				a(id="logout" class="nav-link" href="/logout") Logout
+		else
+			li(class="nav-item")
+				a(id="login" class="nav-link" href='/login') Login	
