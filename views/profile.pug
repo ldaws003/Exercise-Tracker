@@ -169,8 +169,10 @@ html
 							}]
 						}
 						chart = new Chart(ctx, chartData.update);
+					} else {
+						//when there is nothing to load
+						alert("Sorry, but there is no entry of this type.");					
 					}
-					//add something when data is null
 				},
 				failure: function(data){
 					console.log(data);
@@ -197,11 +199,11 @@ html
 								if(data.update){
 									console.log(data);
 									chart.data = data.update.data;
-									chart.options = data.update.option;
 									chart.update();
+								} else {
+									//when there is nothing to load
+									alert("Sorry, but there is no entry of this type.");
 								}
-								
-								//add something when data is null
 							},
 							error: function(data){
 								alert(data.msg);
@@ -247,8 +249,10 @@ html
 									var ctx = document.getElementById('progressChart').getContext('2d');
 									chart.data = chartData.update.data;
 									chart.update();
-								}
-								//add something when data is null								
+								} else {
+									//when there is nothing to load
+									alert("Sorry, but there is no entry of this type.");				
+								}								
 							},
 							failure: function(data){
 								//delete canvas and replace it with a text saying "no entries"
