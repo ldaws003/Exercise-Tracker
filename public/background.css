@@ -1,0 +1,46 @@
+.background-activity-beach {
+	background: url('/assets/active-activity-beach-634030.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.background-aerobics-group {
+	background: url('/assets/activity-aerobics-agility-1881327.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.background-beard-bodybuilding {
+	background: url('/assets/adult-beard-bodybuilding-1851820.jpg');
+}
+
+.endurance-exercise {
+	background: url('/assets/endurance-exercise-female-40751.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+	opacity: 0.90;
+	background-size: cover;
+}
+
+.fitness-jog {
+	background-image: url("/assets/exercise-fitness-jog-1199590.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.background-holder {
+	height: 100vh;
+	overflow: hidden;	
+	width: 100%;
+	position: fixed;
+}
+
+.img-holder {
+	width: 100%;
+	min-width: 250px;
+	max-width: 50wh;
+	height: auto;
+}
