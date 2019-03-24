@@ -8,6 +8,7 @@
 
 .white-background {
 	background-color: white;
+	opacity: 1;
 }
 
 .y-spacing {
@@ -17,6 +18,11 @@
 
 .smaller-text {
 	font-size: 14px;
+}
+
+//adding style for delete option
+.delete-link {
+	
 }
 
 //height for security questions and input
