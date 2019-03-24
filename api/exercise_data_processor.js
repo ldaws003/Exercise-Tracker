@@ -17,7 +17,7 @@ function DataDisplay(){
 	
 	//maximum amount of pages 
 	this.maxPages = function(user, perPage){
-		return Math.floor(user.exercise_data.length/perPage);
+		return Math.ceil(user.exercise_data.length/perPage);
 	};
 	
 	//define the type data and options of the chart

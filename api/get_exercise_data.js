@@ -97,13 +97,7 @@ module.exports = function(app){
 		
     //deleting an entry
 	    .delete(ensureAuthenticated, [
-			sanitizeBody('description').trim().escape(),
-			sanitizeBody('category').trim().escape(),
-			sanitizeBody('duration').trim().escape().toInt(),
-			body('category', 'Invalid category.').isIn(checker.allowedCategories),
-			body('description').isLength({min: 4}).withMessage('Description is too short'),
-			body('duration', 'This has to be a number').isNumeric(),
-			body('date', 'This has to be a date').isISO8601()		
+			query('_id', 'This has to be a number').trim().escape()
 		],(req, res) => {
 			
 			if(!req.user){
@@ -113,12 +107,15 @@ module.exports = function(app){
 				return;
 			}
 			
+			console.log("this is the query", req.query);
+			console.log("this is the body", req.body);
+			
+			var data = req.body._id || req.query._id;
+			
 			var setObject = {$pull:
                     			{exercise_data: 
 									{
-										description: data.description,
-										data: data.date,
-										duration: data.duration
+										_id: ObjectID(data._id)
 									}
 								}
 							};
