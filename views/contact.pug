@@ -9,6 +9,7 @@ html
 		meta(name='viewport', content='width=device-width, initial-scale=1')
 		meta(http-equiv='Content-Language' content='en')
 		link(rel="stylesheet" href="/public/constrict_view.css")
+		link(rel="stylesheet" href="/public/background.css")
 		link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous")
 		script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous")
 		script(src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous")
@@ -20,38 +21,40 @@ html
 			
 		include ../includes/navbar.pug
 		
-		div(class="container constrict centered y-spacing")
+		div(class="endurance-exercise background-holder")
 		
-		
-			p.
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vestibulum quis nulla 
-				vitae dictum. Ut malesuada venenatis bibendum. Sed suscipit lacus sit amet facilisis volutpat.
-				Pellentesque eros lacus, pulvinar at orci nec, varius viverra odio. Donec ullamcorper porttitor 
-				arcu, non sollicitudin eros. Duis eget porttitor arcu. Sed vel arcu hendrerit, dignissim massa 
-				sed, mattis dui.
+			div(class="container constrict centered y-spacing" style="opacity: 1;")
 			
 			
-			p Contact Form
-			
-			div(class="row")
-			
-				div(class="col-md-4")
+				p.
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vestibulum quis nulla 
+					vitae dictum. Ut malesuada venenatis bibendum. Sed suscipit lacus sit amet facilisis volutpat.
+					Pellentesque eros lacus, pulvinar at orci nec, varius viverra odio. Donec ullamcorper porttitor 
+					arcu, non sollicitudin eros. Duis eget porttitor arcu. Sed vel arcu hendrerit, dignissim massa 
+					sed, mattis dui.
 				
-					form(id="contactSubmit" action="/api/storecontact" method='post')
-						div(class="form-group")
-							label Your Name:
-							input(type='text', class="form-control", name='name', required)
-						div(class="form-group")
-							label Your Email:
-							input(type='email', class="form-control", name='email', required)
-						div(class="form-group")
-							label Message:
-							textarea(class="form-control", name='message', required)
-						input(type='submit', class="btn btn-primary btn-block", name='submit', value='submit')
+				
+				p Contact Form
+				
+				div(class="row")
+				
+					div(class="col-md-4")
+					
+						form(id="contactSubmit" action="/api/storecontact" method='post')
+							div(class="form-group")
+								label(class="font-weight-bold") Your Name:
+								input(type='text', class="form-control", name='name', required)
+							div(class="form-group")
+								label(class="font-weight-bold") Your Email:
+								input(type='email', class="form-control", name='email', required)
+							div(class="form-group")
+								label(class="font-weight-bold") Message:
+								textarea(class="form-control", name='message', required)
+							input(type='submit', class="btn btn-primary btn-block", name='submit', value='submit')
 						
 	script.
 		$(document).ready(function(){
-			$("#contact").addClass("disabled");
+			$("#contact").addClass("active");
 			
 			$("#contactSubmit").submit(function(event){
 				event.preventDefault();

@@ -96,8 +96,8 @@ html
 	script.
 		$(document).ready(function() {
 		
-			//adding disabled profile link in the navbar
-			$("#profile").addClass("disabled");
+			//adding active profile link in the navbar
+			$("#profile").addClass("active");
 		
 			//function to get a new page of journal entries
 			function onClickPage (){
@@ -120,7 +120,7 @@ html
 								html.push("<p class='description smaller-text'>"+ele.description+"</p>");
 								html.push("</div>");
 								html.push("<div class='card-footer'>");
-								html.push("<p class='duration'> Duration: "+ele.duration+"</p>");
+								html.push("<p class='duration'> Duration: "+moment.duration(ele.duration, 'seconds').humanize()+"</p>");
 								html.push("</div>");
 								html.push("</div>");
 							});
@@ -177,30 +177,6 @@ html
 					//delete canvas and replace it with a text saying "no entries"
 				}
 			});
-		
-			
-			//getting a new page
-			for(let i = 0; i < #{max}; i++){
-				$((i + 1)+"get").click(function(e){
-					$.ajax({
-						type: 'GET',
-						url: '/api/getdata',
-						data: i + 1,
-						success: function(data){
-							var html = [];
-							data.forEach((ele) => {
-								html.push('<div class="dataContainer">');
-								html.push('<p>'+ele.data+'</p><p>'+ele.description+'</p>');
-								html.push('<p>'+ele.duration+'</p><p>'+ele.category+'</p></div>');
-							});
-							$('#journal').html(html.join(''));
-						},
-						error: function(data){
-							alert(data)
-						}
-					});
-				})
-			}
 			
 			//adding buttons to change chart
 			var buttons = [
@@ -311,7 +287,7 @@ html
 							html.push("<p class='description smaller-text'>"+ele.description+"</p>");
 							html.push("</div>");
 							html.push("<div class='card-footer'>");
-							html.push("<p class='duration'> Duration: "+ele.duration+"</p>");
+							html.push("<p class='duration'> Duration: "+moment.duration(n.duration, 'seconds').humanize()+"</p>");
 							html.push("</div>");
 							html.push("</div>");
 						});
