@@ -29,6 +29,7 @@ app.use(expressValidator());
 
 app.set('view engine', 'pug');
 app.use('/public', express.static(process.cwd() + '/public'));
+app.use('/assets', express.static(process.cwd() + '/assets'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.locals.moment = require('moment');
