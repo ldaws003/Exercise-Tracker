@@ -39,7 +39,7 @@
 		"express-validator": "^5.3.1"
 	},
 	"engines": {
-		"node": "4.4.3"
+		"node": "8.11.3"
 	},
 	"keywords": [
 		"express",
