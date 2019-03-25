@@ -1,4 +1,5 @@
 # Exercise-Tracker
 This is a website that you can sign up for and use to track your exercise habits.
-Coming soon would be an option for having a pomodoro clock that will track how 
-many focus sessions you have completed.
+I had used mongoose for the database, bootstrap 4 for styling, jquery for the interface, passport
+for authentication, helmetjs for some added security, and bcrypt for hashing passwords. I used pug for
+the templating engine, and I used express-validator to sanitize and validate entries to the exercise journal.
