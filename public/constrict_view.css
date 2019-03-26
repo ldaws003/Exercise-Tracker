@@ -6,6 +6,10 @@
 	margin: 20px auto;
 }
 
+.move-down {
+  margin-top: 15px;
+}
+
 .white-background {
 	background-color: white;
 	opacity: 1;
