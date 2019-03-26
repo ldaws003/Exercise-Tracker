@@ -2,58 +2,62 @@ doctype html
 
 html
 
-	head
-		title Exercise Tracker
-		meta(charset="utf-8")
-		meta(name="description", content="self-help web app")
-		meta(http-equiv='X-UA-Compatible', content='IE-edge')
-		meta(name='viewport', content='width=device-width, initial-scale=1')
-		meta(http-equiv='Content-Language' content='en')
-		link(rel="stylesheet" href="/public/background.css")
-		link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous")
-		script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous")
-		script(src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous")
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
-		
-	body
-		header
-			title Exercise Tracker
-		
-		include ../includes/navbar.pug		
-		
-		
-		div(class="background-activity-beach background-holder")
-		
-			div(class="container constrict")
-				
-				div(class="row my-4")
-				
-					div(class="col-md-8 my-4 white-background")
-		
-						p.
-							Hi there, and welcome to the Exercise-Tracker. You can use this website to 
-							keep a record of what exercise you have done, and you can see a graph to
-							visualize the progress you have made.
-						if(!user)
-							a(href='/register') Sign Up
-							
-					if(!user)
-					
-						div(class="col-md-4 my-4")
-					
-							p Login
-							
-							form(action='/login', method='post')
-								div(class="form-group")
-									label Username:
-									input(type='text', class="form-control", name='username', placeholder='username', required)
-								div(class="form-group")
-									label Password:
-									input(type="password", class="form-control", name="password", placeholder='password', required)
-								input(type="submit", class="btn btn-primary", name="Submit", value="log in")
-								
-	script.
-		$(document).ready(function(){
-			$("#home").addClass("active");
-		});
-			
+  head
+    title Exercise Tracker
+    meta(charset="utf-8")
+    meta(name="description", content="self-help web app")
+    meta(http-equiv='X-UA-Compatible', content='IE-edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(http-equiv='Content-Language' content='en')
+    link(rel="stylesheet" href="/public/constrict_view.css")
+    link(rel="stylesheet" href="/public/background.css")
+    script(src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous")
+    link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous")    
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
+
+  body
+    header
+      title Exercise Tracker
+
+
+    div(class="" style="min-height: 350px;")
+
+      include ../includes/navbar.pug
+
+      div(class="container constrict")
+      
+        div(class="row background-activity-beach" style="width: 100%; height: 40vh; margin: 0 auto;")
+
+        div(class="row my-4")
+
+          div(class="col-md-8 my-4")
+
+            p.
+              Hi there, and welcome to the Exercise-Tracker. You can use this website to 
+              keep a record of what exercise you have done, and you can see a graph to
+              visualize the progress you have made.
+            if(!user)
+              a(href='/register') Sign Up
+
+
+          if(!user)
+
+            div(class="col-md-4 my-4")
+
+              p Login
+
+              form(action='/login', method='post')
+                div(class="form-group")
+                  label Username:
+                  input(type='text', class="form-control", name='username', placeholder='username', required)
+                div(class="form-group")
+                  label Password:
+                  input(type="password", class="form-control", name="password", placeholder='password', required)
+                input(type="submit", class="btn btn-primary", name="Submit", value="log in")
+
+
+  script.
+    $(document).ready(function(){
+      $("#home").addClass("active");
+    });

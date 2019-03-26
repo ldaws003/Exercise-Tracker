@@ -1,6 +1,5 @@
 .env
 /node_modules/*
 /layouts/*
-/assets/*
 npm-debug.log
 .DS_Store

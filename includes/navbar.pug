@@ -1,21 +1,26 @@
-nav(class="navbar navbar-expand-md sticky-top" style="width: 100%; background-color: white")
+nav(class="navbar navbar-expand-lg navbar-toggleable-lg navbar-light sticky-top" style="width: 100%; background-color: white")
 
-	ul(class="navbar-nav nav-tabs white-background")
-	
-		a(class="navbar-brand")
-			img(src="/assets/free_horizontal_on_white_by_logaster.png" alt="logo" style="width: 85px;")
-			
-		li(class="nav-item")
-			a(id="home" class="nav-link" href="/") Home
-		li(class="nav-item")
-			a(id="about" class="nav-link" href="/about") About
-		li(class="nav-item")
-			a(id="contact" class="nav-link" href="/contact") Contact
-		if (user)
-			li(class="nav-item")
-				a(id="profile" class="nav-link" href="/profile") Profile
-			li(class="nav-item")
-				a(id="logout" class="nav-link" href="/logout") Logout
-		else
-			li(class="nav-item")
-				a(id="login" class="nav-link" href='/login') Login	
+  a(class="navbar-brand")
+      img(src="https://cdn.glitch.com/81e74861-1fe3-4413-b7ef-8613443fd662%2Ffree_horizontal_on_white_by_logaster.png?1553478401883" alt="logo" style="width: 85px;")
+      
+  button(class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation")
+    span(class="navbar-toggler-icon")
+  
+  div(class="collapse navbar-collapse" id="navbarToggler")
+
+    ul(class="navbar-nav mr-auto mt-2 mt-lg-0" style="width: 100%; text-align: center;")
+
+      li(class="nav-item")
+        a(id="home" class="nav-link" href="/") Home
+      li(class="nav-item")
+        a(id="about" class="nav-link" href="/about") About
+      li(class="nav-item")
+        a(id="contact" class="nav-link" href="/contact") Contact
+      if (user)
+        li(class="nav-item")
+          a(id="profile" class="nav-link" href="/profile") Profile
+        li(class="nav-item")
+          a(id="logout" class="nav-link" href="/logout") Logout
+      else
+        li(class="nav-item")
+          a(id="login" class="nav-link" href='/login') Login	
