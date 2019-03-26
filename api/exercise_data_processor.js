@@ -98,8 +98,7 @@ function DataDisplay(){
 		};
 		
 		var options = {
-			showLines: true,
-			responsive: false
+			showLines: true
 		};
 		
 		

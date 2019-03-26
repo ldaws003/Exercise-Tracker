@@ -1,23 +1,23 @@
 .background-activity-beach {
-	background: url('/assets/active-activity-beach-634030.jpg');
+	background: url('https://cdn.glitch.com/81e74861-1fe3-4413-b7ef-8613443fd662%2Factive-activity-beach-634030.jpg?1553478590121');
 	background-repeat: no-repeat;
-	background-position: center;
+	background-position: 15% 60%;
 	background-size: cover;
 }
 
 .background-aerobics-group {
-	background: url('/assets/activity-aerobics-agility-1881327.jpg');
+	background: url('https://cdn.glitch.com/81e74861-1fe3-4413-b7ef-8613443fd662%2Factivity-aerobics-agility-1881327.jpg?1553478677475');
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
 }
 
 .background-beard-bodybuilding {
-	background: url('/assets/adult-beard-bodybuilding-1851820.jpg');
+	background: url('https://cdn.glitch.com/81e74861-1fe3-4413-b7ef-8613443fd662%2Fadult-beard-bodybuilding-1851820.jpg?1553478666242');
 }
 
 .endurance-exercise {
-	background: url('/assets/endurance-exercise-female-40751.jpg');
+	background: url('https://cdn.glitch.com/81e74861-1fe3-4413-b7ef-8613443fd662%2Fendurance-exercise-female-40751.jpg?1553478560817');
 	background-repeat: no-repeat;
 	background-position: center;
 	opacity: 0.90;
@@ -25,17 +25,23 @@
 }
 
 .fitness-jog {
-	background-image: url("/assets/exercise-fitness-jog-1199590.jpg");
+	background-image: url("https://cdn.glitch.com/81e74861-1fe3-4413-b7ef-8613443fd662%2Fexercise-fitness-jog-1199590.jpg?1553478563808");
 	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.sunrise-background {
+  background-image: url("https://cdn.glitch.com/81e74861-1fe3-4413-b7ef-8613443fd662%2Fbeach-coast-nature-106132.jpg?1553560113603");
+  background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
 }
 
 .background-holder {
 	height: 100vh;
-	overflow: hidden;	
+	overflow: hidden;
 	width: 100%;
-	position: fixed;
 }
 
 .img-holder {
@@ -43,4 +49,11 @@
 	min-width: 250px;
 	max-width: 50wh;
 	height: auto;
+}
+
+.img-holder-2 {
+  width: 100%;
+  min-width: 150px;
+  max-width: 400px;
+  height: auto;
 }
