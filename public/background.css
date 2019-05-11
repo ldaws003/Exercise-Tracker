@@ -32,10 +32,10 @@
 }
 
 .sunrise-background {
-  background-image: url("https://cdn.glitch.com/81e74861-1fe3-4413-b7ef-8613443fd662%2Fbeach-coast-nature-106132.jpg?1553560113603");
+  background-color: #f9ea8f;
+  background-image: linear-gradient(315deg, #f9ea8f 0%, #aff1da 74%);
   background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
+  height: 100vh;
 }
 
 .background-holder {
