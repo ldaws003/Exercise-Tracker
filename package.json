@@ -23,7 +23,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "helmet": "^3.15.1",
-    "moment": "2.24.0",
+    "moment": "^2.24.0",
     "mongodb": "^3.1.0",
     "mongoose": "^5.4.13",
     "passport": "^0.4.0",
@@ -38,7 +38,8 @@
     "chai": "^4.2.0",
     "jquery": "^3.4.1",
     "popper.js": "^1.14.3",
-    "express-validator": "^5.3.1"
+    "express-validator": "^5.3.1",
+    "react-datepicker": "^2.5.0"
   },
   "engines": {
     "node": "8.11.3"
