@@ -10,28 +10,35 @@ class AddEntry extends React.Component{
       description: "",
       duration1: "12:00",
       duration2: "12:30",
-      date: moment().format('DD/MM/YYYY')
+      date: moment()
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.dateChange = this.dateChange.bind(this);
+  }
+  
+  dateChange(d){
+    this.setState({date: d});
   }
   
   onChange(e){
-    e.preventDefault();
+    console.log(e);
     
     switch(e.target.id){
       case 'category':
+        this.setState({category: e.target.value});
         break;
       case 'description':
+        this.setState({description: e.target.value});
         break;
       case 'duration1':
+        this.setState({duration1: e.target.value});
         break;
       case 'duration2':
-        break;
-      case 'date':
+        this.setState({duration2: e.target.value});
         break;
     }
-    console.log(e.target.value);
+
   }
   
   onSubmit(e){
@@ -42,7 +49,7 @@ class AddEntry extends React.Component{
   
   render(){    
     return(      
-      <React.Fragment>
+      <div>
           <div className="col-md-6">
             <h2>New Entry</h2>
 
@@ -73,13 +80,13 @@ class AddEntry extends React.Component{
               <div className="from-group">
                 <div className="input-group date">
                   <label>Choose the date of your exercise</label>
-                  <DatePicker 
-                    className="form-control mx-1 date" 
+                  <DatePicker
                     selected={this.state.date}
-                    onChange={this.onChange} 
+                    onChange={this.dateChange} 
+                    filterDate={this.isWeekday}
                     id='datepicker' 
                     name="date" 
-                    placeholder="MM/DD/YYYY" required />
+                    required />
                   <span className="input-group-addon">
                     <span className="glyphicon glyphicon-calendar" />
                   </span>
@@ -91,7 +98,7 @@ class AddEntry extends React.Component{
                 value='add new entry' />
 	         </form>
 	        </div>
-        </React.Fragment>
+        </div>
     );
   }
 }
